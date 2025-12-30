@@ -36,6 +36,7 @@
   <h2>Ultimate Subscription</h2>
   <nav>
     <a onclick="goAbout()">About</a>
+    <a onclick="goContact()">Contact Us</a>
   </nav>
 </header>
 
@@ -91,6 +92,7 @@ function openApplyForm(){
     submitForm();
   });
 }
+
 function submitForm(){
   closeM();
   const l=document.getElementById('loader');l.style.display='flex';
@@ -108,13 +110,16 @@ function submitForm(){
     m.style.display='flex';
   },2000);
 }
+
 function confirmPayment(){
   const msg=\`Ultimate Subscription Registration: Name: \${formData.name}, Phone: \${formData.phone}, Email: \${formData.email}, Network: \${formData.network}, Payment: ₦500 confirmed.\`;
   const url="https://wa.me/2349168660191?text="+encodeURIComponent(msg);
   window.location.href=url;
 }
+
 function closeM(){const m=document.getElementById('modal');m.style.display='none';m.innerHTML='';}
 function goAbout(){window.location.href='about.html';}
+function goContact(){window.location.href='contact.html';}
 </script>
 </body>
 </html>
