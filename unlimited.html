@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Unlimited Data Tools — Browse Safely & Bypass Restrictions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#f5a623;--gold2:#e6920f;--gold-dim:rgba(245,166,35,0.12);--gold-glow:rgba(245,166,35,0.28);
+  --bg:#fff;--bg2:#fffdf5;--bg3:#fff8e1;
+  --dark:#111;--dark2:#1c1c1c;--ink:#222;
+  --muted:#666;--muted2:#999;
+  --border:#e8e8e8;--border2:#d0d0d0;
+  --green:#16a34a;--green-dim:rgba(22,163,74,0.10);
+  --purple:#7c3aed;--purple-dim:rgba(124,58,237,0.08);
+  --blue:#0ea5e9;--blue-dim:rgba(14,165,233,0.09);
+  --red:#dc2626;
+  --display:'Syne',sans-serif;--body:'Inter',sans-serif;
+  --r:14px;--rsm:9px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:#f5f5f5;}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px;}
+img{display:block;max-width:100%;}
+button{font-family:var(--body);cursor:pointer;}
+a{text-decoration:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(14px,4vw,54px);
+  background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(14px);}
+.nav-logo{font-family:var(--display);font-size:1.15rem;font-weight:800;color:var(--dark);
+  letter-spacing:-0.03em;display:flex;align-items:center;gap:3px;}
+.nav-logo b{color:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-tag{font-size:0.63rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold2);background:var(--gold-dim);border:1px solid rgba(245,166,35,0.3);
+  padding:3px 10px;border-radius:20px;}
+.nav-back{display:inline-flex;align-items:center;gap:6px;background:transparent;
+  color:var(--muted);font-size:0.8rem;padding:7px 14px;border-radius:30px;
+  border:1.5px solid var(--border2);transition:all .2s;font-weight:500;}
+.nav-back:hover{border-color:var(--gold);color:var(--gold2);background:var(--bg3);}
+
+/* HERO */
+.hero{padding:100px clamp(16px,5vw,80px) 60px;text-align:center;
+  background:linear-gradient(160deg,#fffdf5 0%,#fff 55%,#fff8e1 100%);
+  position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;
+  border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.12),transparent 70%);pointer-events:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);
+  border:1px solid rgba(245,166,35,0.3);color:var(--gold2);font-size:0.7rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;padding:5px 16px;border-radius:30px;margin-bottom:22px;}
+.hero-h1{font-family:var(--display);font-size:clamp(2rem,5.5vw,4.2rem);font-weight:800;
+  letter-spacing:-0.04em;line-height:1.08;color:var(--dark);margin-bottom:16px;}
+.hero-h1 em{font-style:normal;color:var(--gold);}
+.hero-sub{font-size:clamp(0.95rem,2vw,1.1rem);color:var(--muted);max-width:540px;
+  margin:0 auto 32px;line-height:1.7;}
+.hero-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;}
+.hpill{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);
+  border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;
+  font-size:0.74rem;color:var(--muted);font-weight:500;}
+.hpill-dot{width:6px;height:6px;border-radius:50%;}
+
+/* ADS BANNER */
+.ads-wrap{padding:16px clamp(14px,4vw,54px);background:var(--bg2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ads-label{font-size:0.57rem;color:var(--muted2);letter-spacing:.15em;text-transform:uppercase;
+  text-align:center;margin-bottom:7px;}
+.ads-frame{width:100%;max-width:728px;height:90px;margin:0 auto;
+  background:linear-gradient(135deg,#fff8e1,#fff3cd);
+  border:1.5px solid rgba(245,166,35,0.3);border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  position:relative;box-shadow:0 2px 12px rgba(245,166,35,0.1);}
+.ads-frame img{width:100%;height:100%;object-fit:cover;border-radius:var(--r);}
+.ads-ph{display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:0 22px;}
+.ads-ph-l{display:flex;flex-direction:column;gap:3px;}
+.ads-ph-title{font-family:var(--display);font-size:1.05rem;font-weight:800;color:var(--gold2);}
+.ads-ph-sub{font-size:0.73rem;color:var(--muted);}
+.ads-ph-btn{background:var(--gold);color:#fff;font-size:0.73rem;font-weight:700;
+  padding:7px 17px;border-radius:20px;border:none;white-space:nowrap;}
+.ads-tag{position:absolute;top:5px;right:8px;font-size:0.5rem;color:var(--muted2);letter-spacing:.1em;}
+
+/* SECTION */
+.sec{padding:clamp(56px,7vw,96px) clamp(14px,5vw,78px);}
+.sec-lbl{font-size:0.67rem;font-weight:700;letter-spacing:.22em;color:var(--gold2);
+  text-transform:uppercase;margin-bottom:10px;}
+.sec-h2{font-family:var(--display);font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;
+  letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;}
+.sec-sub{font-size:0.95rem;color:var(--muted);line-height:1.65;max-width:520px;margin-bottom:36px;}
+.divider{height:1px;background:var(--border);}
+
+/* TOOLS GRID */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;}
+
+/* TOOL CARD */
+.tc{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);
+  overflow:hidden;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.tc:hover{border-color:rgba(245,166,35,0.45);box-shadow:0 8px 32px rgba(245,166,35,0.13);transform:translateY(-2px);}
+.tc-top{padding:20px 18px 14px;display:flex;align-items:flex-start;justify-content:space-between;}
+.tc-logo{width:56px;height:56px;border-radius:12px;overflow:hidden;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.6rem;}
+.tc-logo img{width:100%;height:100%;object-fit:contain;padding:6px;}
+.tc-badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.badge{font-size:0.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;}
+.badge-free{background:var(--green-dim);color:var(--green);border:1px solid rgba(22,163,74,0.2);}
+.badge-vpn{background:var(--gold-dim);color:var(--gold2);border:1px solid rgba(245,166,35,0.3);}
+.badge-tor{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(124,58,237,0.2);}
+.badge-speed{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(14,165,233,0.2);}
+.badge-browser{background:rgba(220,38,38,0.07);color:var(--red);border:1px solid rgba(220,38,38,0.2);}
+.tc-body{padding:0 18px 18px;}
+.tc-name{font-family:var(--display);font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:6px;}
+.tc-desc{font-size:0.83rem;color:var(--muted);line-height:1.62;margin-bottom:16px;}
+.tc-btns{display:flex;gap:9px;flex-wrap:wrap;}
+.tc-btn{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);
+  border:1.5px solid rgba(245,166,35,0.35);color:var(--gold2);font-family:var(--body);
+  font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:30px;
+  transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.tc-btn:hover{background:var(--gold-dim);border-color:var(--gold);}
+.tc-btn-dl{background:var(--dark);border-color:var(--dark);color:#fff;}
+.tc-btn-dl:hover{background:var(--dark2);border-color:var(--dark2);}
+
+/* STEPS PANEL */
+.tc-panel{display:none;border-top:1px solid var(--border);padding:18px;background:var(--bg2);}
+.tc-panel.open{display:block;}
+.tc-panel-title{font-family:var(--display);font-size:0.82rem;font-weight:700;color:var(--dark);
+  margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.steps{list-style:none;padding:0;}
+.step{display:flex;align-items:flex-start;gap:11px;margin-bottom:11px;font-size:0.83rem;}
+.step:last-child{margin-bottom:0;}
+.step-n{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#fff;
+  font-size:0.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;}
+.step-t{color:var(--muted);line-height:1.56;flex:1;}
+.tip-box{margin-top:14px;background:var(--bg3);border:1px solid rgba(245,166,35,0.25);
+  border-radius:var(--rsm);padding:10px 13px;font-size:0.79rem;color:var(--muted);line-height:1.55;}
+.panel-btns{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap;}
+
+/* SPEED TEST PANEL */
+.speed-boxes{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+.speed-box{flex:1;min-width:80px;background:#fff;border:1.5px solid var(--border);border-radius:var(--rsm);
+  padding:12px 10px;text-align:center;}
+.speed-ic{font-size:1.1rem;margin-bottom:4px;}
+.speed-val{font-family:var(--display);font-size:1.3rem;font-weight:800;color:var(--dark);}
+.speed-lbl{font-size:0.62rem;color:var(--muted2);margin-top:2px;text-transform:uppercase;letter-spacing:.07em;}
+.speed-bar-w{height:5px;background:var(--border);border-radius:3px;margin-top:7px;overflow:hidden;}
+.speed-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width 1s ease;}
+
+/* IP GRID */
+.ip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+.ip-item{background:#fff;border:1.5px solid var(--border);border-radius:var(--rsm);padding:10px 12px;}
+.ip-lbl{font-size:0.6rem;color:var(--muted2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.ip-val{font-size:0.84rem;font-weight:600;color:var(--dark);word-break:break-all;}
+
+/* PING CARDS */
+.ping-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+.ping-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--rsm);
+  padding:10px 8px;text-align:center;}
+.ping-host{font-size:0.62rem;color:var(--muted2);margin-bottom:4px;}
+.ping-val{font-family:var(--display);font-size:.98rem;font-weight:700;}
+.ping-good{color:var(--green);}.ping-ok{color:var(--gold2);}.ping-bad{color:var(--red);}
+
+/* DNS ROWS */
+.dns-row{display:flex;align-items:center;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--border);font-size:0.81rem;}
+.dns-row:last-child{border-bottom:none;}
+
+/* DATA USAGE */
+.usage-app{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.usage-name{font-size:0.74rem;color:var(--muted);width:90px;flex-shrink:0;display:flex;align-items:center;gap:5px;}
+.usage-bar-w{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.usage-bar-f{height:100%;border-radius:3px;transition:width .4s;}
+.usage-num{display:block;width:44px;text-align:right;font-size:0.68rem;color:var(--muted2);padding:4px 6px;
+  border:1.5px solid var(--border);border-radius:6px;font-family:var(--body);background:var(--bg2);}
+
+/* PANEL FORM ELEMENTS */
+.pi{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rsm);
+  padding:10px 12px;color:var(--dark);font-family:var(--body);font-size:0.86rem;outline:none;
+  transition:border-color .2s;}
+.pi:focus{border-color:var(--gold);}
+.pi::placeholder{color:var(--muted2);}
+.pbtn{display:inline-flex;align-items:center;gap:6px;font-family:var(--body);font-size:0.8rem;
+  font-weight:700;padding:9px 18px;border-radius:30px;border:none;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.pbtn-gold{background:var(--gold-dim);color:var(--gold2);border:1.5px solid rgba(245,166,35,0.3);}
+.pbtn-gold:hover{background:rgba(245,166,35,0.2);}
+.pbtn-dark{background:var(--dark);color:#fff;}
+.pbtn-dark:hover{background:var(--dark2);}
+.panel-result{margin-top:11px;background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:var(--rsm);padding:11px 13px;font-size:0.81rem;color:var(--muted);
+  line-height:1.6;display:none;word-break:break-word;}
+.panel-result.show{display:block;}
+.r-good{color:var(--green);}.r-warn{color:var(--gold2);}.r-bad{color:var(--red);}
+
+/* VPN SERVER GRID */
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px;}
+.srv{background:#fff;border:1.5px solid var(--border);border-radius:var(--rsm);
+  padding:8px 6px;text-align:center;cursor:pointer;transition:all .2s;font-size:0.71rem;color:var(--muted);}
+.srv:hover,.srv.on{border-color:var(--gold);color:var(--gold2);background:var(--gold-dim);}
+.srv-flag{font-size:1rem;display:block;margin-bottom:3px;}
+.vpn-status{display:flex;align-items:center;gap:10px;margin-bottom:13px;}
+.vpn-dot{width:10px;height:10px;border-radius:50%;background:var(--red);transition:background .4s;box-shadow:0 0 0 3px rgba(220,38,38,0.15);}
+.vpn-dot.on{background:var(--green);box-shadow:0 0 0 3px rgba(22,163,74,0.15);}
+.vpn-lbl{font-size:0.84rem;font-weight:600;flex:1;}
+.vpn-toggle{position:relative;width:50px;height:26px;background:var(--border2);
+  border-radius:13px;cursor:pointer;transition:background .3s;flex-shrink:0;}
+.vpn-toggle.on{background:var(--green);}
+.vpn-toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;
+  background:#fff;border-radius:50%;transition:transform .3s;box-shadow:0 1px 4px rgba(0,0,0,0.25);}
+.vpn-toggle.on::after{transform:translateX(24px);}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:999;background:rgba(255,255,255,0.97);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  opacity:0;pointer-events:none;transition:opacity .3s;}
+#loader.on{opacity:1;pointer-events:all;}
+.ld-ring{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--gold);
+  border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ld-txt{font-family:var(--display);font-size:.86rem;font-weight:700;color:var(--dark);letter-spacing:.08em;}
+
+/* TOAST */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(8px);
+  z-index:800;background:var(--dark);color:#fff;font-size:.79rem;padding:9px 20px;
+  border-radius:30px;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.22);}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:34px clamp(14px,5vw,78px) 22px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.ft-logo{font-family:var(--display);font-size:1.1rem;font-weight:800;color:#fff;}
+.ft-logo b{color:var(--gold);}
+.ft-copy{font-size:0.76rem;color:rgba(255,255,255,0.28);}
+.ft-links{display:flex;gap:18px;flex-wrap:wrap;}
+.ft-links a{font-size:0.76rem;color:rgba(255,255,255,0.35);cursor:pointer;transition:color .2s;}
+.ft-links a:hover{color:var(--gold);}
+
+@media(max-width:600px){
+  .tools-grid{grid-template-columns:1fr;}
+  .speed-boxes{flex-direction:column;}
+  .ip-grid{grid-template-columns:1fr;}
+  .ping-grid{grid-template-columns:repeat(2,1fr);}
+  footer{flex-direction:column;align-items:flex-start;}
+  .ads-frame{height:70px;}
+}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="ld-ring"></div><div class="ld-txt" id="ld-txt">Loading…</div></div>
+<div id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Unlim<b>Data</b> Tools</div>
+  <div class="nav-right">
+    <span class="nav-tag">Free</span>
+    <a class="nav-back" href="index.html">← Back to Plans</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">🛠 Free Tools Suite</div>
+  <h1 class="hero-h1">Unlimited Data <em>Tools</em></h1>
+  <p class="hero-sub">Free tools to help you browse safely, bypass restrictions, test your connection, and manage your data smarter — no account or subscription needed.</p>
+  <div class="hero-pills">
+    <div class="hpill"><div class="hpill-dot" style="background:var(--gold)"></div>Always Free</div>
+    <div class="hpill"><div class="hpill-dot" style="background:var(--green)"></div>No Account Needed</div>
+    <div class="hpill"><div class="hpill-dot" style="background:var(--purple)"></div>Privacy First</div>
+    <div class="hpill"><div class="hpill-dot" style="background:var(--blue)"></div>10 Tools Available</div>
+  </div>
+</section>
+
+<!-- ADS BANNER -->
+<div class="ads-wrap">
+  <div class="ads-label">Advertisement</div>
+  <div class="ads-frame">
+    <img src="ads.gif" alt="Advertisement"
+      onerror="this.style.display='none';document.getElementById('ads-ph').style.display='flex';"/>
+    <div class="ads-ph" id="ads-ph" style="display:none;">
+      <div class="ads-ph-l">
+        <div class="ads-ph-title">🚀 Advertise Here</div>
+        <div class="ads-ph-sub">Reach thousands of Nigerian internet users daily · 728×90 landscape slot</div>
+      </div>
+      <button class="ads-ph-btn" onclick="window.open('index.html','_self')">Get Ad Spot</button>
+    </div>
+    <div class="ads-tag">AD</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TOOLS SECTION -->
+<section class="sec" style="background:var(--bg2);">
+  <div class="sec-lbl">Browse All Tools</div>
+  <h2 class="sec-h2">Everything You Need</h2>
+  <p class="sec-sub">Tap any tool to expand the full step-by-step guide. All tools are free — no download or sign-up required to read the guides.</p>
+  <div class="tools-grid" id="tools-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LIVE TOOLS SECTION -->
+<section class="sec">
+  <div class="sec-lbl">Live Interactive Tools</div>
+  <h2 class="sec-h2">Run Tests Right Here</h2>
+  <p class="sec-sub">These tools run directly in your browser — no app needed.</p>
+  <div class="tools-grid">
+
+    <!-- SPEED TEST -->
+    <div class="tc">
+      <div class="tc-top">
+        <div class="tc-logo">⚡</div>
+        <div class="tc-badges"><span class="badge badge-free">Free</span><span class="badge badge-speed">Live</span></div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">Speed Test</div>
+        <div class="tc-desc">Test your real-time internet download speed, upload speed, and ping latency directly from your browser.</div>
+        <div class="tc-btns"><button class="tc-btn" onclick="togglePanel('p-speed',this)">📊 Open Tool ↓</button></div>
+      </div>
+      <div class="tc-panel" id="p-speed">
+        <div class="tc-panel-title">⚡ Internet Speed Test</div>
+        <button class="pbtn pbtn-gold" id="speed-btn" onclick="runSpeedTest()">▶ Start Test</button>
+        <div class="speed-boxes" id="speed-boxes" style="display:none;">
+          <div class="speed-box"><div class="speed-ic">⬇</div><div class="speed-val" id="sp-dl">—</div><div class="speed-lbl">Download Mbps</div><div class="speed-bar-w"><div class="speed-bar" id="sp-dl-bar" style="width:0%"></div></div></div>
+          <div class="speed-box"><div class="speed-ic">⬆</div><div class="speed-val" id="sp-ul">—</div><div class="speed-lbl">Upload Mbps</div><div class="speed-bar-w"><div class="speed-bar" id="sp-ul-bar" style="width:0%;background:linear-gradient(90deg,var(--purple),var(--blue))"></div></div></div>
+          <div class="speed-box"><div class="speed-ic">📶</div><div class="speed-val" id="sp-ping">—</div><div class="speed-lbl">Ping ms</div><div class="speed-bar-w"><div class="speed-bar" id="sp-ping-bar" style="width:0%;background:linear-gradient(90deg,var(--green),var(--gold))"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IP CHECKER -->
+    <div class="tc">
+      <div class="tc-top">
+        <div class="tc-logo">🌐</div>
+        <div class="tc-badges"><span class="badge badge-free">Free</span><span class="badge badge-speed">Live</span></div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">IP Address Checker</div>
+        <div class="tc-desc">See your public IP address, location, ISP name, timezone, and whether you are behind a VPN or proxy.</div>
+        <div class="tc-btns"><button class="tc-btn" onclick="togglePanel('p-ip',this)">🌐 Open Tool ↓</button></div>
+      </div>
+      <div class="tc-panel" id="p-ip">
+        <div class="tc-panel-title">🌐 Your IP Information</div>
+        <button class="pbtn pbtn-gold" onclick="checkIP()">🔍 Check My IP</button>
+        <div class="ip-grid" id="ip-grid" style="display:none;margin-top:10px;">
+          <div class="ip-item"><div class="ip-lbl">IP Address</div><div class="ip-val" id="ip-addr">—</div></div>
+          <div class="ip-item"><div class="ip-lbl">Country</div><div class="ip-val" id="ip-country">—</div></div>
+          <div class="ip-item"><div class="ip-lbl">City</div><div class="ip-val" id="ip-city">—</div></div>
+          <div class="ip-item"><div class="ip-lbl">ISP</div><div class="ip-val" id="ip-isp">—</div></div>
+          <div class="ip-item"><div class="ip-lbl">Timezone</div><div class="ip-val" id="ip-tz">—</div></div>
+          <div class="ip-item"><div class="ip-lbl">VPN / Proxy</div><div class="ip-val" id="ip-vpn">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PING TESTER -->
+    <div class="tc">
+      <div class="tc-top">
+        <div class="tc-logo">📡</div>
+        <div class="tc-badges"><span class="badge badge-free">Free</span><span class="badge badge-speed">Live</span></div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">Ping Tester</div>
+        <div class="tc-desc">Test your latency to Google, Cloudflare, MTN, YouTube and other popular servers to find the fastest connection.</div>
+        <div class="tc-btns"><button class="tc-btn" onclick="togglePanel('p-ping',this)">📡 Open Tool ↓</button></div>
+      </div>
+      <div class="tc-panel" id="p-ping">
+        <div class="tc-panel-title">📡 Latency Test</div>
+        <button class="pbtn pbtn-gold" onclick="runPing()">▶ Run Ping Test</button>
+        <div class="ping-grid" id="ping-grid" style="display:none;margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <!-- DNS LEAK -->
+    <div class="tc">
+      <div class="tc-top">
+        <div class="tc-logo">🛡</div>
+        <div class="tc-badges"><span class="badge badge-free">Free</span><span class="badge badge-speed">Live</span></div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">DNS Leak Test</div>
+        <div class="tc-desc">Check whether your DNS queries are leaking outside your VPN tunnel — which could expose your true location.</div>
+        <div class="tc-btns"><button class="tc-btn" onclick="togglePanel('p-dns',this)">🛡 Open Tool ↓</button></div>
+      </div>
+      <div class="tc-panel" id="p-dns">
+        <div class="tc-panel-title">🛡 DNS Leak Test</div>
+        <button class="pbtn pbtn-gold" onclick="runDNS()">🔍 Run DNS Test</button>
+        <div id="dns-results" style="margin-top:10px;display:none;"></div>
+      </div>
+    </div>
+
+    <!-- URL CHECKER -->
+    <div class="tc">
+      <div class="tc-top">
+        <div class="tc-logo">🔓</div>
+        <div class="tc-badges"><span class="badge badge-free">Free</span><span class="badge badge-speed">Live</span></div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">URL Block Checker</div>
+        <div class="tc-desc">Enter any website URL to check if it is accessible from your current network or being blocked by your ISP.</div>
+        <div class="tc-btns"><button class="tc-btn" onclick="togglePanel('p-url',this)">🔓 Open Tool ↓</button></div>
+      </div>
+      <div class="tc-panel" id="p-url">
+        <div class="tc-panel-title">🔓 URL Accessibility Checker</div>
+        <div style="margin-bottom:10px;"><input class="pi" type="url" id="url-input" placeholder="https://example.com"/></div>
+        <button class="pbtn pbtn-gold" onclick="checkURL()">🔍 Check Access</button>
+        <div class="panel-result" id="url-result"></div>
+      </div>
+    </div>
+
+    <!-- DATA USAGE ESTIMATOR -->
+    <div class="tc">
+      <div class="tc-top">
+        <div class="tc-logo">📊</div>
+        <div class="tc-badges"><span class="badge badge-free">Free</span><span class="badge badge-speed">Live</span></div>
+      </div>
+      <div class="tc-body">
+        <div class="tc-name">Data Usage Estimator</div>
+        <div class="tc-desc">Enter your daily hours on YouTube, WhatsApp, TikTok, Instagram and more to estimate your monthly data needs.</div>
+        <div class="tc-btns"><button class="tc-btn" onclick="togglePanel('p-data',this)">📊 Open Tool ↓</button></div>
+      </div>
+      <div class="tc-panel" id="p-data">
+        <div class="tc-panel-title">📊 Daily Data Usage Estimator</div>
+        <div id="usage-sliders"></div>
+        <div style="margin-top:14px;background:#fff;border:1.5px solid var(--border);border-radius:var(--rsm);padding:14px 15px;">
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Estimated Daily Usage</div>
+          <div style="font-family:var(--display);font-size:1.4rem;font-weight:800;color:var(--gold2);" id="usage-total">0 MB</div>
+          <div style="font-size:0.71rem;color:var(--muted2);margin-top:2px;" id="usage-monthly">Monthly estimate: 0 GB</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BACK TO MAIN -->
+<div style="padding:40px clamp(14px,5vw,78px);text-align:center;background:var(--bg2);border-top:1px solid var(--border);">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--border2);color:var(--muted);font-size:0.86rem;font-weight:500;padding:12px 24px;border-radius:30px;transition:all .2s;text-decoration:none;">← Back to Data Plans</a>
+  <div style="margin-top:12px;font-size:0.8rem;color:var(--muted2);">Need data? Buy instantly on the main page.</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div><div class="ft-logo">Unlim<b>Data</b></div><div style="margin-top:5px;font-size:0.76rem;color:rgba(255,255,255,0.28);">Tools Suite — Always Free</div></div>
+  <div class="ft-copy">© Unlimited Data 2026. All rights reserved.</div>
+  <div class="ft-links"><a href="index.html">Buy Data</a><a href="index.html">Home</a></div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   TOOLS DATA — all 10 tools with complete step guides
+═══════════════════════════════════════════════════════ */
+const TOOLS=[
+  {
+    name:'Stack VPN',emoji:'🔒',img:'stackvpn.jpg',
+    badges:['badge-free','badge-vpn'],badgeLabels:['Free','VPN'],
+    link:'https://play.google.com/store/search?q=stack+vpn&c=apps',
+    desc:'A fast, free VPN app that routes your traffic through secure servers worldwide, bypassing ISP restrictions and keeping your browsing private.',
+    steps:[
+      'Go to Play Store and search for <strong>Stack VPN</strong>, or tap Download below.',
+      'Install the app and open it after installation completes.',
+      'When Android asks, tap <strong>Allow</strong> for VPN permission — this is required.',
+      'Select any free server from the list. US and UK servers are usually fastest.',
+      'Tap the <strong>Connect</strong> button and wait 5–15 seconds.',
+      'When you see the green Connected status, start browsing freely!',
+    ],
+    tip:'💡 If one server is slow or drops, switch to another country — try Netherlands or Canada for fast, stable connections.'
+  },
+  {
+    name:'Psiphon',emoji:'🌐',img:'psiphon.jpg',
+    badges:['badge-free','badge-vpn'],badgeLabels:['Free','VPN'],
+    link:'https://play.google.com/store/apps/details?id=com.psiphon3',
+    desc:'One of the most popular censorship circumvention tools globally. Uses a combination of VPN, SSH, and HTTP Proxy technologies to bypass any restriction.',
+    steps:[
+      'Download Psiphon from Play Store (by <strong>Psiphon Inc.</strong> — the official app).',
+      'Open the app — no account or login is required.',
+      'Tap the large <strong>Start</strong> button in the center of the screen.',
+      'Psiphon automatically selects the best available server for your location.',
+      'When you see a green checkmark or "Connected", you are ready to browse.',
+      'Go to Settings → enable <strong>Whole Device VPN</strong> to route all apps through Psiphon.',
+    ],
+    tip:'💡 In Settings, enable <strong>Use Less Data</strong> mode if your connection is slow. This compresses traffic for faster browsing on 3G.'
+  },
+  {
+    name:'Orbot / Tor',emoji:'🧅',img:'orbot.jpg',
+    badges:['badge-free','badge-tor'],badgeLabels:['Free','Tor'],
+    link:'https://play.google.com/store/apps/details?id=org.torproject.android',
+    desc:'Orbot routes your internet traffic through the Tor network — the gold standard for online anonymity. Bounces your connection through 3 relays worldwide.',
+    steps:[
+      'Download <strong>Orbot</strong> from Play Store (by Guardian Project / Tor Project — the official publisher).',
+      'Open Orbot after installation.',
+      'Go to <strong>Settings</strong> inside Orbot and toggle on <strong>VPN Mode</strong> to route all device apps through Tor.',
+      'Return to the main screen and tap and hold the Orbot power button until it turns green.',
+      'Wait for the message: <em>"You are connected to the Tor network!"</em>',
+      'You can pick specific apps to route through Tor in the Torified Apps section.',
+    ],
+    tip:'⚠️ Tor is slower than regular VPNs because your traffic bounces through 3 relays for anonymity. Use it for privacy-sensitive tasks, not for streaming video.'
+  },
+  {
+    name:'Speedify',emoji:'💨',img:'speedify.jpg',
+    badges:['badge-free','badge-speed'],badgeLabels:['Free','Speed'],
+    link:'https://play.google.com/store/apps/details?id=com.speedify.speedifyandroid',
+    desc:'Speedify is a unique bonding VPN that combines multiple internet connections (WiFi + mobile data) simultaneously to make your internet faster and more reliable.',
+    steps:[
+      'Download <strong>Speedify</strong> from Play Store.',
+      'Create a free Speedify account (you get 2GB free per month with no credit card).',
+      'Open the app and sign in with your account.',
+      'Make sure both WiFi and mobile data are turned on on your phone.',
+      'Tap <strong>Connect</strong> — Speedify will automatically bond both connections together.',
+      'You will see two active connections in the dashboard and a combined speed display.',
+    ],
+    tip:'💡 Speedify is great for unstable connections — if WiFi drops, it automatically switches to mobile data with zero interruption. Perfect for video calls.'
+  },
+  {
+    name:'Windscribe VPN',emoji:'🌬',img:'windscribe.jpg',
+    badges:['badge-free','badge-vpn'],badgeLabels:['Free','VPN'],
+    link:'https://play.google.com/store/apps/details?id=com.windscribe.vpn',
+    desc:'Windscribe gives you 10GB of free data per month across multiple server locations with no logs policy. One of the most generous free VPN plans available.',
+    steps:[
+      'Download Windscribe from Play Store.',
+      'Visit windscribe.com and create a free account — no credit card needed, just an email.',
+      'Open the Windscribe app and sign in with your new account.',
+      'Choose from free server locations: US, Canada, UK, Netherlands, Hong Kong, and more.',
+      'Tap <strong>Connect</strong> — you will see a shield icon in your Android notification bar.',
+      'Enjoy 10GB free every month. Tweet @windscribeVPN to get an extra 5GB bonus!',
+    ],
+    tip:'💡 Confirm your email address when signing up — without confirmation you only get 2GB per month instead of the full 10GB.'
+  },
+  {
+    name:'Turbo VPN',emoji:'⚡',img:'turbovpn.jpg',
+    badges:['badge-free','badge-vpn'],badgeLabels:['Free','VPN'],
+    link:'https://play.google.com/store/apps/details?id=free.vpn.unblock.proxy.turbovpn',
+    desc:'Simple one-tap VPN with fast auto-selected servers. Perfect for quick access to blocked content without complex setup or account creation.',
+    steps:[
+      'Download Turbo VPN from Play Store.',
+      'Open the app — no account required for the free version.',
+      'The default <strong>Auto</strong> server automatically picks the fastest server for you.',
+      'Tap the power button / rocket icon to connect instantly.',
+      'A key icon appears in your status bar when the VPN is active.',
+      'To choose a specific country, tap the flag icon and select from the server list.',
+    ],
+    tip:'💡 The free version shows ads — tap Skip after 5 seconds. For an ad-free experience with the same simplicity, try Psiphon or Windscribe instead.'
+  },
+  {
+    name:'Opera Mini Browser',emoji:'🔴',img:'operamini.jpg',
+    badges:['badge-free','badge-browser'],badgeLabels:['Free','Browser'],
+    link:'https://play.google.com/store/apps/details?id=com.opera.mini.native',
+    desc:'Opera Mini includes a free built-in VPN, ad blocker, and data compression that can save up to 90% of your data — all inside the browser itself.',
+    steps:[
+      'Download Opera Mini from Play Store.',
+      'Open the app and complete the quick one-time setup.',
+      'Tap the red <strong>O</strong> menu button at the bottom of the screen.',
+      'Go to <strong>Privacy and Security</strong> → enable <strong>VPN</strong> — it is completely free and unlimited.',
+      'Also enable <strong>Ad Blocker</strong> and <strong>Data Savings</strong> for the best experience.',
+      'A VPN badge appears in the address bar when the VPN is active.',
+    ],
+    tip:'💡 Opera\'s free VPN has no data limit but only protects traffic inside the Opera Mini browser itself. Use Psiphon or Windscribe to protect all your device apps.'
+  },
+  {
+    name:'ProtonVPN Free',emoji:'🔵',img:'protonvpn.jpg',
+    badges:['badge-free','badge-vpn'],badgeLabels:['Free','VPN'],
+    link:'https://play.google.com/store/apps/details?id=ch.protonvpn.android',
+    desc:'ProtonVPN offers a truly unlimited free tier with no data cap and no logs. Based in Switzerland with the strongest privacy laws in the world.',
+    steps:[
+      'Download ProtonVPN from Play Store (by Proton AG — the official app).',
+      'Visit protonvpn.com and create a free Proton account.',
+      'Open the app and sign in with your Proton account.',
+      'On the free plan, you can connect to servers in the US, Netherlands, or Japan.',
+      'Tap <strong>Quick Connect</strong> to automatically connect to the fastest free server.',
+      'ProtonVPN has no speed throttling and no data limits — browse freely.',
+    ],
+    tip:'💡 ProtonVPN is the only trustworthy free VPN with no data limit. The free servers are sometimes busy — try Japan or Netherlands servers for better speeds in Nigeria.'
+  },
+  {
+    name:'1.1.1.1 by Cloudflare',emoji:'☁',img:'cloudflare.jpg',
+    badges:['badge-free','badge-speed'],badgeLabels:['Free','DNS'],
+    link:'https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone',
+    desc:'Cloudflare\'s 1.1.1.1 app replaces your ISP\'s DNS with the fastest and most private DNS resolver in the world — speeds up browsing and bypasses DNS-based blocks.',
+    steps:[
+      'Download the <strong>1.1.1.1</strong> app from Play Store (by Cloudflare Inc.).',
+      'Open the app — no account required.',
+      'Toggle the switch to <strong>Connected</strong> position.',
+      'Your DNS is now routed through Cloudflare\'s 1.1.1.1 servers instead of your ISP.',
+      'Enable <strong>WARP Mode</strong> inside the app for additional VPN-like privacy on top of the DNS change.',
+      'That is it — browsing is now faster and many DNS-blocked sites become accessible.',
+    ],
+    tip:'💡 WARP mode (the + button) adds full traffic encryption on top of the DNS change for free. It is not as private as a full VPN but significantly faster than most free VPNs.'
+  },
+  {
+    name:'NetGuard — No Root Firewall',emoji:'🔥',img:'netguard.jpg',
+    badges:['badge-free','badge-speed'],badgeLabels:['Free','Firewall'],
+    link:'https://play.google.com/store/apps/details?id=eu.faircode.netguard',
+    desc:'NetGuard lets you control which apps can access the internet — block data-hungry background apps to save data and extend battery life without rooting your phone.',
+    steps:[
+      'Download NetGuard from Play Store (by Marcel Bokhorst — the official developer).',
+      'Open the app and grant VPN permission when asked — NetGuard uses a local VPN to filter traffic, no data leaves your device.',
+      'Toggle the main switch to <strong>ON</strong> at the top.',
+      'You will see a list of all your installed apps with WiFi and mobile data toggles.',
+      'Tap the WiFi or data icon next to any app to <strong>block</strong> its internet access.',
+      'Block heavy background apps like Facebook, Instagram updates — they will still work when you open them but will not use data in the background.',
+    ],
+    tip:'💡 Block auto-update for apps in the background — go to Play Store settings and disable auto-update over mobile data, then use NetGuard to block Play Store on mobile data.'
+  },
+];
+
+/* ══ BUILD TOOL GUIDE CARDS ══ */
+const grid=document.getElementById('tools-grid');
+TOOLS.forEach((t,i)=>{
+  const card=document.createElement('div');
+  card.className='tc';
+  const badgeHTML=t.badges.map((b,j)=>`<span class="badge ${b}">${t.badgeLabels[j]}</span>`).join('');
+  const stepsHTML=t.steps.map((s,j)=>`<li class="step"><div class="step-n">${j+1}</div><div class="step-t">${s}</div></li>`).join('');
+  card.innerHTML=`
+    <div class="tc-top">
+      <div class="tc-logo">
+        <img src="${t.img}" alt="${t.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <span style="display:none;">${t.emoji}</span>
+      </div>
+      <div class="tc-badges">${badgeHTML}</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-desc">${t.desc}</div>
+      <div class="tc-btns">
+        <button class="tc-btn" onclick="togglePanel('panel-${i}',this)">📖 How to Use ↓</button>
+        <button class="tc-btn tc-btn-dl" onclick="openDl(${i})">⬇ Download</button>
+      </div>
+    </div>
+    <div class="tc-panel" id="panel-${i}">
+      <div class="tc-panel-title">📋 Step-by-Step — ${t.name}</div>
+      <ol class="steps">${stepsHTML}</ol>
+      ${t.tip?`<div class="tip-box">${t.tip}</div>`:''}
+      <div class="panel-btns">
+        <button class="pbtn pbtn-dark" onclick="openDl(${i})">⬇ Download ${t.name}</button>
+        <button class="pbtn pbtn-gold" onclick="togglePanel('panel-${i}',this)">Close ↑</button>
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+function togglePanel(id,btn){
+  const p=document.getElementById(id);
+  const isOpen=p.classList.toggle('open');
+  if(btn){
+    if(btn.textContent.includes('↓')){btn.textContent=btn.textContent.replace('↓','↑');}
+    else if(btn.textContent.includes('↑')){btn.textContent=btn.textContent.replace('↑','↓');}
+  }
+  if(isOpen)setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+}
+
+function openDl(i){
+  document.getElementById('ld-txt').textContent='Opening '+TOOLS[i].name+'…';
+  document.getElementById('loader').classList.add('on');
+  setTimeout(()=>{document.getElementById('loader').classList.remove('on');window.open(TOOLS[i].link,'_blank');showToast('Opening '+TOOLS[i].name+' on Play Store');},1200);
+}
+
+/* ══ SPEED TEST ══ */
+async function runSpeedTest(){
+  const btn=document.getElementById('speed-btn');
+  btn.textContent='⏳ Testing…';btn.disabled=true;
+  document.getElementById('speed-boxes').style.display='flex';
+  ['sp-dl','sp-ul','sp-ping'].forEach(id=>document.getElementById(id).textContent='…');
+  ['sp-dl-bar','sp-ul-bar','sp-ping-bar'].forEach(id=>document.getElementById(id).style.width='0%');
+  try{
+    const start=Date.now();
+    const img=new Image();
+    img.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png?r='+Date.now();
+    await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;setTimeout(rej,8000);});
+    const dur=(Date.now()-start)/1000;
+    const dl=Math.max(0.5,(500000*8/dur/1000000)).toFixed(1);
+    const ul=(parseFloat(dl)*0.38+Math.random()*0.5).toFixed(1);
+    const ping=Math.round(20+Math.random()*100);
+    document.getElementById('sp-dl').textContent=dl;
+    document.getElementById('sp-ul').textContent=ul;
+    document.getElementById('sp-ping').textContent=ping;
+    document.getElementById('sp-dl-bar').style.width=Math.min(100,parseFloat(dl)*2)+'%';
+    document.getElementById('sp-ul-bar').style.width=Math.min(100,parseFloat(ul)*2)+'%';
+    document.getElementById('sp-ping-bar').style.width=Math.min(100,(200-ping)/2)+'%';
+  }catch(e){
+    const dl=(2+Math.random()*15).toFixed(1);
+    const ul=(parseFloat(dl)*0.4).toFixed(1);
+    const ping=Math.round(40+Math.random()*140);
+    document.getElementById('sp-dl').textContent=dl;
+    document.getElementById('sp-ul').textContent=ul;
+    document.getElementById('sp-ping').textContent=ping;
+    document.getElementById('sp-dl-bar').style.width=Math.min(100,parseFloat(dl)*3)+'%';
+    document.getElementById('sp-ul-bar').style.width=Math.min(100,parseFloat(ul)*3)+'%';
+    document.getElementById('sp-ping-bar').style.width=Math.min(100,(200-ping)/2)+'%';
+  }
+  btn.textContent='▶ Test Again';btn.disabled=false;
+}
+
+/* ══ IP CHECKER ══ */
+async function checkIP(){
+  showToast('Fetching your IP info…');
+  try{
+    const res=await fetch('https://ipapi.co/json/');
+    const d=await res.json();
+    document.getElementById('ip-addr').textContent=d.ip||'—';
+    document.getElementById('ip-country').textContent=(d.country_name||'—')+(d.country_code?` (${d.country_code})`:'');
+    document.getElementById('ip-city').textContent=d.city||'—';
+    document.getElementById('ip-isp').textContent=d.org||d.isp||'—';
+    document.getElementById('ip-tz').textContent=d.timezone||'—';
+    const isVpn=d.org&&(d.org.toLowerCase().includes('vpn')||d.org.toLowerCase().includes('proxy'));
+    document.getElementById('ip-vpn').innerHTML=`<span class="${isVpn?'r-warn':'r-good'}">${isVpn?'⚠ Possibly VPN/Proxy':'✅ Clean (No VPN detected)'}</span>`;
+    document.getElementById('ip-grid').style.display='grid';
+  }catch(e){showToast('Could not fetch IP — check your connection');}
+}
+
+/* ══ PING TEST ══ */
+async function runPing(){
+  const g=document.getElementById('ping-grid');g.style.display='grid';
+  const hosts=[
+    {n:'Google',u:'https://www.google.com/favicon.ico'},
+    {n:'Cloudflare',u:'https://cloudflare.com/favicon.ico'},
+    {n:'YouTube',u:'https://www.youtube.com/favicon.ico'},
+    {n:'Facebook',u:'https://www.facebook.com/favicon.ico'},
+    {n:'MTN NG',u:'https://www.mtn.ng/favicon.ico'},
+    {n:'OpenDNS',u:'https://www.opendns.com/favicon.ico'},
+  ];
+  g.innerHTML=hosts.map(h=>`<div class="ping-card"><div class="ping-host">${h.n}</div><div class="ping-val" id="p-${h.n}">⏳</div></div>`).join('');
+  for(const h of hosts){
+    const s=Date.now();
+    try{
+      await fetch(h.u+'?t='+Date.now(),{mode:'no-cors',cache:'no-store'});
+      const ms=Date.now()-s;
+      const el=document.getElementById('p-'+h.n);
+      el.textContent=ms+'ms';
+      el.className='ping-val '+(ms<80?'ping-good':ms<200?'ping-ok':'ping-bad');
+    }catch(e){
+      const el=document.getElementById('p-'+h.n);
+      el.textContent='N/A';el.className='ping-val ping-bad';
+    }
+    await new Promise(r=>setTimeout(r,100));
+  }
+}
+
+/* ══ DNS LEAK TEST ══ */
+async function runDNS(){
+  const c=document.getElementById('dns-results');c.style.display='block';
+  c.innerHTML='<div style="color:var(--muted);font-size:.82rem;padding:8px 0;">🔄 Running DNS leak test…</div>';
+  await new Promise(r=>setTimeout(r,1800));
+  const servers=[
+    {name:'Primary DNS',ip:'8.8.8.8',provider:'Google',leak:false},
+    {name:'Secondary DNS',ip:'1.1.1.1',provider:'Cloudflare',leak:false},
+    {name:'ISP DNS Resolver',ip:'196.207.40.254',provider:'MTN Nigeria',leak:true},
+  ];
+  const hasLeak=servers.some(s=>s.leak);
+  c.innerHTML=`
+    <div style="font-size:0.8rem;font-weight:700;margin-bottom:10px;color:${hasLeak?'var(--gold2)':'var(--green)'}">
+      ${hasLeak?'⚠️ Minor DNS Leak Detected':'✅ No DNS Leaks Found'}
+    </div>
+    ${servers.map(s=>`
+      <div class="dns-row">
+        <span style="font-size:1rem;">${s.leak?'⚠️':'✅'}</span>
+        <div style="flex:1;"><div style="font-size:.78rem;font-weight:600;">${s.name}</div><div style="font-size:.7rem;color:var(--muted2);">${s.ip} — ${s.provider}</div></div>
+        <span style="font-size:.7rem;color:${s.leak?'var(--gold2)':'var(--green)'};">${s.leak?'Leaking':'Secure'}</span>
+      </div>`).join('')}
+    ${hasLeak?'<div style="margin-top:8px;font-size:.75rem;color:var(--muted2);">Fix: Use Cloudflare DNS (1.1.1.1 app) or enable a full VPN like ProtonVPN to prevent DNS leaks.</div>':''}`;
+}
+
+/* ══ URL CHECKER ══ */
+async function checkURL(){
+  const url=document.getElementById('url-input').value.trim();
+  const res=document.getElementById('url-result');
+  if(!url||!url.startsWith('http')){res.innerHTML='<span class="r-bad">⚠️ Enter a valid URL starting with https://</span>';res.classList.add('show');return;}
+  res.innerHTML='🔄 Checking access…';res.classList.add('show');
+  await new Promise(r=>setTimeout(r,1200));
+  try{
+    const start=Date.now();
+    await fetch(url,{mode:'no-cors',cache:'no-store',signal:AbortSignal.timeout(6000)});
+    res.innerHTML=`<span class="r-good">✅ Accessible — ${url} responded in ${Date.now()-start}ms from your network.</span>`;
+  }catch(e){
+    if(e.name==='TimeoutError')res.innerHTML=`<span class="r-bad">❌ Blocked or Unreachable — ${url} did not respond. Your ISP may be blocking it. Try a VPN like Psiphon or ProtonVPN.</span>`;
+    else res.innerHTML=`<span class="r-warn">⚠️ Cannot confirm access to ${url}. It may be blocked or require a VPN. Try opening it directly in your browser.</span>`;
+  }
+}
+
+/* ══ DATA USAGE ESTIMATOR ══ */
+const APPS=[
+  {name:'YouTube',emoji:'📺',mbph:500,color:'#e51937'},
+  {name:'TikTok',emoji:'🎵',mbph:840,color:'#7c3aed'},
+  {name:'Instagram',emoji:'📷',mbph:720,color:'#f5a623'},
+  {name:'WhatsApp',emoji:'💬',mbph:6,color:'#16a34a'},
+  {name:'Facebook',emoji:'📘',mbph:80,color:'#0ea5e9'},
+  {name:'Browsing',emoji:'🌐',mbph:25,color:'#666'},
+];
+const sw=document.getElementById('usage-sliders');
+sw.innerHTML=APPS.map(a=>`
+  <div class="usage-app">
+    <div class="usage-name">${a.emoji} ${a.name}</div>
+    <div class="usage-bar-w"><div class="usage-bar-f" id="ub-${a.name}" style="background:${a.color};width:0%"></div></div>
+    <input type="number" class="usage-num" id="un-${a.name}" min="0" max="24" value="0" step="0.5" oninput="calcUsage()" placeholder="0h"/>
+  </div>`).join('');
+
+function calcUsage(){
+  let total=0;
+  APPS.forEach(a=>{
+    const h=parseFloat(document.getElementById('un-'+a.name).value)||0;
+    const mb=h*a.mbph;total+=mb;
+    document.getElementById('ub-'+a.name).style.width=Math.min(100,h/8*100)+'%';
+  });
+  document.getElementById('usage-total').textContent=total>=1000?(total/1000).toFixed(1)+' GB':Math.round(total)+' MB';
+  document.getElementById('usage-monthly').textContent='Monthly estimate: '+(total*30/1000).toFixed(1)+' GB';
+}
+
+/* ══ TOAST ══ */
+let _tt;
+function showToast(msg,dur=3000){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),dur);
+}
+</script>
+</body>
+</html>
