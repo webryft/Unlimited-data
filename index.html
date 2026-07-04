@@ -1,442 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Unlimited data</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>UnlimData — Unlimited Internet Subscription for All Networks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <style>
-  :root{
-    --brand-green:#228B22;
-    --white:#ffffff;
-    --muted-bg:#f4f4f4;
-    --accent-blue:#1e90ff;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--brand-green);
-    color:var(--white);
-  }
-
-  header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 30px;
-  }
-  header h2{margin:0;font-size:20px}
-  nav a{
-    color:#fff;
-    margin-left:18px;
-    cursor:pointer;
-    text-decoration:none;
-    font-weight:600;
-  }
-
-  .hero{
-    text-align:center;
-    padding:56px 20px;
-  }
-  .hero h1{
-    max-width:900px;
-    margin:0 auto 12px;
-    font-size:30px;
-    line-height:1.2;
-  }
-  .hero p{max-width:800px;margin:0 auto 18px;color:rgba(255,255,255,0.95)}
-  .btn{
-    background:#fff;color:var(--brand-green);padding:12px 26px;border-radius:6px;font-weight:700;cursor:pointer;display:inline-block;border:none;
-  }
-  .btn.secondary{
-    margin-left:12px;
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.18);
-    color:#fff;
-    padding:10px 16px;
-    border-radius:6px;
-    cursor:pointer;
-  }
-
-  .images-wrap{background:var(--muted-bg);padding:36px 20px}
-  .images{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}
-  .images img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.08);display:block}
-
-  /* progress UI */
-  #inviteProgressWrap{max-width:420px;margin:18px auto 0;display:none}
-  #inviteProgressWrap .title{font-weight:700;color:#fff;margin-bottom:8px}
-  #inviteProgressWrap .track{background:rgba(255,255,255,0.12);border-radius:8px;padding:4px}
-  #inviteProgressBar{width:0%;height:14px;background:var(--accent-blue);border-radius:6px;transition:width .18s linear}
-  #inviteProgressText{color:#fff;margin-top:8px;font-size:13px;text-align:center}
-
-  /* claim area */
-  #inviteClaimWrap{max-width:420px;margin:12px auto 30px;display:none;text-align:center}
-
-  /* modal and loader */
-  .modal-bg, .loader {
-    position:fixed;
-    top:0;left:0;
-    width:100%;height:100%;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:1200;
-  }
-  .modal-bg{background:rgba(0,0,0,0.6)}
-  .modal{
-    background:#fff;color:#000;padding:20px;border-radius:12px;width:92%;max-width:520px;box-shadow:0 20px 40px rgba(0,0,0,0.25);
-  }
-  .modal h3{margin:0 0 10px;font-size:18px}
-  .modal label{display:block;margin:8px 0 6px;color:#333;font-size:13px}
-  .modal input,.modal select{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
-  .modal .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
-  .modal button{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
-  .primary{background:var(--brand-green);color:#fff}
-  .secondary{background:#e0e0e0;color:#111}
-  .loader{background:var(--brand-green);color:#fff;font-size:18px;padding:12px 20px;border-radius:8px}
-
-  /* claim button style */
-  #inviteClaimWrap .claim-btn{
-    background:var(--accent-blue);
-    color:#fff;
-    border-radius:8px;
-    padding:10px 18px;
-    border:none;
-    cursor:pointer;
-    font-weight:700;
-  }
-
-  @media (max-width:720px){.images{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:420px){.images{grid-template-columns:1fr}.hero h1{font-size:20px}}
+:root{--gold:#f5a623;--gold2:#e6920f;--gold-dim:rgba(245,166,35,0.12);--gold-glow:rgba(245,166,35,0.30);--bg:#fff;--bg2:#fffdf5;--bg3:#fff8e1;--dark:#111;--dark2:#1c1c1c;--ink:#222;--muted:#666;--muted2:#999;--border:#e8e8e8;--border2:#d0d0d0;--green:#16a34a;--green-dim:rgba(22,163,74,0.10);--red:#dc2626;--display:'Syne',sans-serif;--body:'Inter',sans-serif;--r:14px;--rsm:9px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:#f5f5f5;}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px;}
+img{display:block;max-width:100%;}
+button{font-family:var(--body);cursor:pointer;}
+a{text-decoration:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:400;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,4vw,54px);background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 2px 22px rgba(0,0,0,0.09);}
+.nav-logo{font-family:var(--display);font-size:1.25rem;font-weight:800;color:var(--dark);letter-spacing:-0.03em;cursor:pointer;display:flex;align-items:center;}
+.navdot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-left:3px;box-shadow:0 0 0 3px rgba(245,166,35,0.22);}
+.nav-right{display:flex;align-items:center;gap:9px;}
+.nbtn{font-size:0.8rem;font-weight:600;padding:8px 17px;border-radius:30px;border:none;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.nbtn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border2);}
+.nbtn-ghost:hover{background:var(--bg2);border-color:var(--gold);}
+.nbtn-fill{background:var(--gold);color:#fff;box-shadow:0 2px 10px var(--gold-glow);}
+.nbtn-fill:hover{background:var(--gold2);transform:translateY(-1px);}
+.hbg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:38px;height:38px;border-radius:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .2s;}
+.hbg:hover{background:var(--bg3);}
+.hbg span{display:block;width:20px;height:2px;background:var(--dark);border-radius:2px;}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px clamp(16px,6vw,100px) 60px;background:linear-gradient(160deg,#fffdf5 0%,#fff 55%,#fff8e1 100%);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.14),transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.09),transparent 70%);pointer-events:none;}
+.hbadge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid rgba(245,166,35,0.35);color:var(--gold2);font-size:0.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:5px 16px;border-radius:30px;margin-bottom:26px;}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.hero-h1{font-family:var(--display);font-size:clamp(2.4rem,7vw,5.2rem);font-weight:800;line-height:1.08;letter-spacing:-0.04em;color:var(--dark);margin-bottom:20px;max-width:880px;}
+.hero-h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.18rem);color:var(--muted);max-width:540px;line-height:1.72;margin-bottom:42px;}
+.hero-btns{display:flex;gap:13px;flex-wrap:wrap;justify-content:center;margin-bottom:54px;}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#fff;font-weight:700;font-size:0.9rem;padding:14px 30px;border-radius:30px;border:none;transition:all .25s;box-shadow:0 4px 20px var(--gold-glow);-webkit-tap-highlight-color:transparent;}
+.btn-p:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px var(--gold-glow);}
+.btn-o{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--dark);font-weight:600;font-size:0.9rem;padding:13px 28px;border-radius:30px;border:2px solid var(--border2);transition:all .25s;-webkit-tap-highlight-color:transparent;}
+.btn-o:hover{border-color:var(--gold);color:var(--gold2);background:var(--gold-dim);}
+.hero-stats{display:flex;gap:clamp(26px,6vw,60px);flex-wrap:wrap;justify-content:center;}
+.stat{text-align:center;}
+.stat-n{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.7rem);font-weight:800;color:var(--dark);letter-spacing:-0.04em;}
+.stat-n b{color:var(--gold);}
+.stat-l{font-size:0.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:3px;}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;font-size:0.62rem;letter-spacing:.2em;color:var(--muted2);text-transform:uppercase;}
+.sarr{width:22px;height:22px;border:1.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;animation:arr 2s ease-in-out infinite;}
+@keyframes arr{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+.ads-wrap{padding:18px clamp(14px,4vw,54px);background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ads-label{font-size:0.58rem;color:var(--muted2);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:8px;}
+.ads-frame{width:100%;max-width:728px;height:90px;margin:0 auto;background:linear-gradient(135deg,#fff8e1,#fff3cd);border:1.5px solid rgba(245,166,35,0.3);border-radius:var(--r);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;box-shadow:0 2px 12px rgba(245,166,35,0.1);}
+.ads-frame img{width:100%;height:100%;object-fit:cover;border-radius:var(--r);}
+.ads-ph{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 24px;}
+.ads-ph-l{display:flex;flex-direction:column;gap:4px;}
+.ads-ph-title{font-family:var(--display);font-size:1.1rem;font-weight:800;color:var(--gold2);}
+.ads-ph-sub{font-size:0.75rem;color:var(--muted);}
+.ads-ph-btn{background:var(--gold);color:#fff;font-size:0.75rem;font-weight:700;padding:7px 18px;border-radius:20px;border:none;white-space:nowrap;}
+.ads-tag{position:absolute;top:5px;right:8px;font-size:0.52rem;color:var(--muted2);letter-spacing:.1em;}
+.sec{padding:clamp(60px,8vw,104px) clamp(14px,5vw,78px);}
+.sec-lbl{font-size:0.67rem;font-weight:700;letter-spacing:.22em;color:var(--gold2);text-transform:uppercase;margin-bottom:10px;}
+.sec-h2{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.9rem);font-weight:800;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;line-height:1.14;}
+.sec-sub{color:var(--muted);font-size:0.96rem;line-height:1.66;max-width:500px;}
+.divider{height:1px;background:var(--border);}
+.nets-sec{background:var(--bg2);}
+.nets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:13px;margin-top:40px;}
+.nc{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:20px 13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;transition:all .25s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.nc:hover{border-color:var(--gold);box-shadow:0 6px 26px rgba(245,166,35,0.16);transform:translateY(-3px);}
+.nc:active{transform:translateY(-1px);}
+.nc-img{width:64px;height:64px;border-radius:13px;overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;}
+.nc-img img{width:100%;height:100%;object-fit:contain;padding:7px;}
+.nc-fall{width:64px;height:64px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.3rem;font-weight:800;}
+.nc-name{font-family:var(--display);font-size:0.78rem;font-weight:700;color:var(--dark);}
+.nc-tag{font-size:0.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);background:var(--green-dim);padding:2px 8px;border-radius:20px;}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:17px;margin-top:40px;}
+.feat{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:24px 20px;transition:border-color .25s,box-shadow .25s;}
+.feat:hover{border-color:rgba(245,166,35,0.4);box-shadow:0 4px 18px rgba(245,166,35,0.1);}
+.feat-ic{width:42px;height:42px;border-radius:10px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:14px;}
+.feat-h{font-family:var(--display);font-size:0.96rem;font-weight:700;color:var(--dark);margin-bottom:6px;}
+.feat-p{font-size:0.83rem;color:var(--muted);line-height:1.65;}
+.invite-sec{background:linear-gradient(135deg,#fffbea,#fff8d6);border-top:1px solid rgba(245,166,35,0.2);border-bottom:1px solid rgba(245,166,35,0.2);}
+.invite-inner{display:flex;align-items:center;gap:38px;flex-wrap:wrap;}
+.invite-em{font-size:3.4rem;flex-shrink:0;line-height:1;}
+.invite-body{flex:1;min-width:230px;}
+.invite-h{font-family:var(--display);font-size:1.45rem;font-weight:800;color:var(--dark);margin-bottom:7px;}
+.invite-p{font-size:0.88rem;color:var(--muted);line-height:1.66;margin-bottom:4px;}
+.invite-note{font-size:0.72rem;color:var(--muted2);font-style:italic;}
+.tstrip{background:var(--dark2);border-radius:var(--r);padding:20px 24px;display:flex;align-items:center;gap:16px;text-decoration:none;transition:background .22s;-webkit-tap-highlight-color:transparent;}
+.tstrip:hover{background:var(--dark);}
+.ts-ic{font-size:1.55rem;flex-shrink:0;}
+.ts-body{flex:1;}
+.ts-title{font-family:var(--display);font-size:.98rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.ts-sub{font-size:0.78rem;color:rgba(255,255,255,0.5);}
+.ts-arr{font-size:1.1rem;color:var(--gold);}
+footer{background:var(--dark);color:rgba(255,255,255,0.8);padding:54px clamp(14px,5vw,78px) 26px;}
+.ft-top{display:flex;gap:42px;flex-wrap:wrap;margin-bottom:42px;}
+.ft-brand{flex:1;min-width:200px;}
+.ft-logo{font-family:var(--display);font-size:1.22rem;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:-0.03em;}
+.ft-logo b{color:var(--gold);}
+.ft-tag{font-size:0.83rem;color:rgba(255,255,255,0.42);line-height:1.7;max-width:250px;}
+.ft-col-h{font-size:0.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:15px;}
+.ft-lnk{display:block;font-size:0.84rem;color:rgba(255,255,255,0.52);margin-bottom:10px;cursor:pointer;transition:color .2s;-webkit-tap-highlight-color:transparent;}
+.ft-lnk:hover{color:var(--gold);}
+.ft-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.ft-copy{font-size:0.76rem;color:rgba(255,255,255,0.28);}
+.ft-row{display:flex;gap:18px;flex-wrap:wrap;}
+.ft-row a{font-size:0.76rem;color:rgba(255,255,255,0.3);cursor:pointer;transition:color .2s;}
+.ft-row a:hover{color:var(--gold);}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(308px,90vw);background:#fff;border-left:1.5px solid var(--border);z-index:500;transform:translateX(110%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto;box-shadow:-8px 0 40px rgba(0,0,0,0.12);}
+#drawer.open{transform:translateX(0);}
+.dr-head{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 14px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.dr-logo{font-family:var(--display);font-size:1rem;font-weight:800;color:var(--dark);}
+.dr-logo b{color:var(--gold);}
+.dr-x{width:30px;height:30px;border-radius:7px;border:1.5px solid var(--border);background:transparent;font-size:1rem;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.dr-x:hover{background:var(--bg3);border-color:var(--gold);color:var(--dark);}
+.dr-user{padding:14px 18px;background:var(--gold-dim);border-bottom:1px solid rgba(245,166,35,0.2);display:none;}
+.dr-user.on{display:block;}
+.dr-uname{font-family:var(--display);font-size:0.9rem;font-weight:700;color:var(--dark);}
+.dr-usub{font-size:0.73rem;color:var(--muted);margin-top:2px;}
+.dr-ubonus{font-size:0.7rem;color:var(--gold2);font-weight:600;margin-top:5px;background:#fff;padding:3px 9px;border-radius:20px;display:inline-block;}
+.dr-body{padding:10px;flex:1;}
+.dr-item{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;cursor:pointer;transition:background .2s;font-size:0.87rem;font-weight:500;color:var(--muted);-webkit-tap-highlight-color:transparent;}
+.dr-item:hover{background:var(--bg3);color:var(--dark);}
+.dr-item.hl{background:var(--gold-dim);color:var(--gold2);font-weight:600;}
+.dr-ic{font-size:1rem;width:20px;text-align:center;flex-shrink:0;}
+.dr-sep{height:1px;background:var(--border);margin:7px 13px;}
+.dr-so{margin:10px;padding:10px;border-radius:9px;background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.15);color:var(--red);font-size:0.84rem;font-weight:600;display:none;transition:all .2s;text-align:center;}
+.dr-so.on{display:block;}
+.dr-so:hover{background:rgba(220,38,38,0.12);}
+#dimmer{position:fixed;inset:0;z-index:490;background:rgba(0,0,0,0.45);opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px);}
+#dimmer.on{opacity:1;pointer-events:all;}
+.mw{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(0,0,0,0.52);opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px);}
+.mw.on{opacity:1;pointer-events:all;}
+.mb{background:#fff;border-radius:20px;width:100%;max-width:440px;padding:28px 24px;position:relative;max-height:92vh;overflow-y:auto;transform:scale(.95) translateY(14px);transition:transform .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 24px 80px rgba(0,0,0,0.2);}
+.mw.on .mb{transform:scale(1) translateY(0);}
+.mx{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);color:var(--muted);font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.mx:hover{background:var(--bg3);color:var(--dark);border-color:var(--gold);}
+.mt{font-family:var(--display);font-size:1.2rem;font-weight:800;color:var(--dark);margin-bottom:5px;}
+.ms{font-size:0.83rem;color:var(--muted);margin-bottom:20px;line-height:1.55;}
+.fg{margin-bottom:14px;}
+.fl{display:block;font-size:0.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.fi{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--rsm);padding:11px 13px;color:var(--dark);font-family:var(--body);font-size:0.88rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+.fi:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,166,35,0.11);}
+.fi::placeholder{color:var(--muted2);}
+textarea.fi{resize:vertical;min-height:94px;}
+.ferr{font-size:0.72rem;color:var(--red);margin-top:4px;display:none;}
+.ferr.on{display:block;}
+.fbtn{width:100%;background:var(--gold);color:#fff;font-family:var(--body);font-size:0.88rem;font-weight:700;padding:12px;border-radius:var(--rsm);border:none;transition:all .2s;margin-top:4px;}
+.fbtn:hover{background:var(--gold2);transform:translateY(-1px);}
+.fbtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.fbtn.red{background:rgba(220,38,38,0.08);color:var(--red);border:1.5px solid rgba(220,38,38,0.2);}
+.fbtn.red:hover{background:rgba(220,38,38,0.14);}
+.flink{display:block;text-align:center;font-size:0.8rem;color:var(--gold2);cursor:pointer;margin-top:13px;transition:opacity .2s;font-weight:500;}
+.flink:hover{opacity:.7;}
+.fdiv{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted2);font-size:0.76rem;}
+.fdiv::before,.fdiv::after{content:'';flex:1;height:1px;background:var(--border);}
+.nm-head{display:flex;align-items:center;gap:13px;padding-bottom:18px;margin-bottom:20px;border-bottom:1.5px solid var(--border);}
+.nm-logo{width:52px;height:52px;border-radius:12px;overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nm-logo img{width:100%;height:100%;object-fit:contain;padding:5px;}
+.nm-name{font-family:var(--display);font-size:1.05rem;font-weight:800;color:var(--dark);}
+.nm-sub{font-size:0.76rem;color:var(--muted);margin-top:2px;}
+.plans-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;}
+.plan{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--rsm);padding:14px 11px;cursor:pointer;text-align:center;transition:all .22s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.plan:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(245,166,35,0.14);}
+.plan::before{content:'';position:absolute;inset:0;background:var(--gold-dim);opacity:0;transition:opacity .2s;}
+.plan:hover::before{opacity:1;}
+.pop-badge{position:absolute;top:0;right:0;background:var(--gold);color:#fff;font-size:0.48rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:0 var(--rsm) 0 var(--rsm);text-transform:uppercase;}
+.plan-data{font-family:var(--display);font-size:1.15rem;font-weight:800;color:var(--gold2);position:relative;}
+.plan-price{font-family:var(--display);font-size:0.86rem;font-weight:700;color:var(--dark);margin-top:2px;position:relative;}
+.plan-val{font-size:0.6rem;color:var(--muted);margin-top:3px;position:relative;}
+.buy-pill{background:linear-gradient(135deg,var(--gold-dim),rgba(245,166,35,0.05));border:1.5px solid rgba(245,166,35,0.28);border-radius:var(--rsm);padding:13px 15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.bp-data{font-family:var(--display);font-size:1.12rem;font-weight:800;color:var(--gold2);}
+.bp-price{font-family:var(--display);font-size:.98rem;font-weight:700;color:var(--dark);}
+.party-row{display:flex;border-radius:var(--rsm);overflow:hidden;border:1.5px solid var(--border);margin-bottom:13px;}
+.pty{flex:1;padding:10px 7px;text-align:center;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all .2s;color:var(--muted);background:var(--bg2);-webkit-tap-highlight-color:transparent;}
+.pty.on{background:var(--gold);color:#fff;}
+.inv-box{background:var(--bg3);border:1.5px solid rgba(245,166,35,0.24);border-radius:var(--rsm);padding:15px;margin-top:15px;}
+.inv-bh{font-family:var(--display);font-size:.83rem;font-weight:700;color:var(--dark);margin-bottom:11px;display:flex;align-items:center;gap:6px;}
+.inv-row{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--border);}
+.inv-row:last-of-type{border-bottom:none;}
+.inv-val{font-family:var(--display);font-weight:700;color:var(--gold2);}
+.inv-bar-w{height:7px;background:var(--border);border-radius:4px;margin-top:9px;overflow:hidden;}
+.inv-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:4px;transition:width .6s;}
+.inv-claim{width:100%;margin-top:11px;padding:10px;border-radius:var(--rsm);background:var(--gold-dim);border:1.5px solid rgba(245,166,35,0.3);color:var(--gold2);font-size:.8rem;font-weight:700;transition:all .2s;}
+.inv-claim:hover:not(:disabled){background:rgba(245,166,35,0.2);}
+.inv-claim:disabled{opacity:.4;cursor:not-allowed;}
+.policy-body{font-size:0.84rem;color:var(--muted);line-height:1.8;}
+.policy-body h3{font-family:var(--display);font-size:0.88rem;font-weight:700;color:var(--dark);margin:16px 0 6px;}
+.policy-body h3:first-child{margin-top:0;}
+.policy-body p{margin-bottom:10px;}
+.policy-body ul{padding-left:18px;margin-bottom:10px;}
+.policy-body ul li{margin-bottom:5px;}
+.policy-footer{border-top:1px solid var(--border);margin-top:16px;padding-top:12px;font-size:0.72rem;color:var(--muted2);}
+#loader{position:fixed;inset:0;z-index:999;background:rgba(255,255,255,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .3s;}
+#loader.on{opacity:1;pointer-events:all;}
+.ld-ring{width:50px;height:50px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ld-txt{font-family:var(--display);font-size:.88rem;font-weight:700;color:var(--dark);letter-spacing:.08em;}
+.ld-sub{font-size:.76rem;color:var(--muted);}
+#success{position:fixed;top:78px;left:50%;transform:translateX(-50%) translateY(-20px);z-index:700;max-width:min(480px,92vw);width:100%;background:#fff;border:1.5px solid rgba(22,163,74,0.35);border-radius:16px;padding:17px 18px;display:flex;align-items:flex-start;gap:13px;box-shadow:0 12px 48px rgba(0,0,0,0.13);opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+#success.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all;}
+.suc-ic{font-size:1.7rem;flex-shrink:0;line-height:1;}
+.suc-t{font-family:var(--display);font-size:.9rem;font-weight:800;color:var(--green);margin-bottom:3px;}
+.suc-m{font-size:.8rem;color:var(--muted);line-height:1.5;}
+.suc-x{background:none;border:none;color:var(--muted2);font-size:1rem;flex-shrink:0;padding:2px;}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(8px);z-index:800;background:var(--dark);color:#fff;font-size:.8rem;padding:9px 20px;border-radius:30px;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.22);}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(max-width:600px){.plans-grid{grid-template-columns:repeat(2,1fr);}.ft-top{flex-direction:column;}.ft-bottom{flex-direction:column;align-items:flex-start;}.hero-stats{gap:24px;}.invite-inner{gap:22px;}.nbtn{display:none;}.ads-frame{height:70px;}}
 </style>
 </head>
 <body>
-<header>
-  <h2>Unlimited data</h2>
-  <nav>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact Us</a>
-    <a id="inviteHeader" style="background:#fff;color:var(--brand-green);padding:8px 12px;border-radius:6px;margin-left:12px;text-decoration:none;font-weight:700">Invite</a>
-  </nav>
-</header>
+<div id="loader"><div class="ld-ring"></div><div class="ld-txt" id="ld-txt">PROCESSING</div><div class="ld-sub" id="ld-sub">Please wait…</div></div>
+<div id="success"><div class="suc-ic">✅</div><div style="flex:1;"><div class="suc-t">Payment Successful!</div><div class="suc-m" id="suc-m">Your data plan has been activated.</div></div><button class="suc-x" onclick="hideBanner()">✕</button></div>
+<div id="toast"></div>
+<div id="dimmer" onclick="closeDimmer()"></div>
+
+<nav id="nav">
+  <div class="nav-logo" onclick="scrollTo(0,0)">Unlim<span style="color:var(--gold)">Data</span><div class="navdot"></div></div>
+  <div class="nav-right">
+    <button class="nbtn nbtn-ghost" id="nav-li" onclick="openM('m-login')">Sign In</button>
+    <button class="nbtn nbtn-fill" id="nav-cta" onclick="openM('m-signup')">Get Started</button>
+    <div class="hbg" onclick="openDrawer()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div id="drawer">
+  <div class="dr-head"><div class="dr-logo">Unlim<b>Data</b></div><button class="dr-x" onclick="closeDrawer()">✕</button></div>
+  <div class="dr-user" id="dr-user"><div class="dr-uname" id="dr-uname"></div><div class="dr-usub">UnlimData Member</div><div class="dr-ubonus" id="dr-ubonus">🎁 Bonus: 0 GB</div></div>
+  <div class="dr-body">
+    <a class="tstrip" href="unlimited.html" target="_blank" style="margin-bottom:12px;">
+      <div class="ts-ic">🛠</div><div class="ts-body"><div class="ts-title">Data Tools</div><div class="ts-sub">Browse safely · Bypass restrictions</div></div><div class="ts-arr">↗</div>
+    </a>
+    <div class="dr-item" onclick="closeDrawer();scrollToNets()"><span class="dr-ic">📡</span>Buy Data</div>
+    <div class="dr-item hl" onclick="closeDrawer();openInvite()"><span class="dr-ic">🎁</span>Invite Friends — Earn 1GB</div>
+    <div class="dr-sep"></div>
+    <div class="dr-item" id="dr-li" onclick="closeDrawer();openM('m-login')"><span class="dr-ic">👤</span>Sign In</div>
+    <div class="dr-item" id="dr-su" onclick="closeDrawer();openM('m-signup')"><span class="dr-ic">✨</span>Create Account</div>
+    <div class="dr-sep"></div>
+    <div class="dr-item" onclick="closeDrawer();openM('m-contact')"><span class="dr-ic">💬</span>Contact Us</div>
+    <div class="dr-item" onclick="closeDrawer();openM('m-about')"><span class="dr-ic">ℹ️</span>About UnlimData</div>
+    <div class="dr-item" onclick="closeDrawer();openM('m-forgot')"><span class="dr-ic">🔑</span>Forgot Password</div>
+    <div class="dr-item" onclick="closeDrawer();openM('m-privacy')"><span class="dr-ic">🔒</span>Privacy Policy</div>
+    <div class="dr-item" onclick="closeDrawer();openM('m-terms')"><span class="dr-ic">📄</span>Terms of Service</div>
+  </div>
+  <button class="dr-so" id="dr-so" onclick="signOut()">Sign Out</button>
+</div>
 
 <section class="hero">
-  <h1>Free Unlimited data Subscription for All Networks</h1>
-  <p>Browse anything, anywhere, anytime. One subscription that works across all networks.</p>
-  <button id="applyNowBtn" class="btn" type="button">Apply Now</button>
-  <button id="inviteHeroBtn" class="btn secondary" type="button">Invite Friends for 30GB</button>
+  <div class="hbadge"><div class="pulse"></div>All Networks · Always On</div>
+  <h1 class="hero-h1">Unlimited Data Subscription<br>for <em>All Networks</em></h1>
+  <p class="hero-sub">Browse anything, anywhere, anytime. One subscription that works across all Nigerian and global networks — at prices that make sense.</p>
+  <div class="hero-btns">
+    <button class="btn-p" onclick="scrollToNets()">🚀 Buy Data Now</button>
+    <button class="btn-o" onclick="openM('m-about')">Learn More</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n"><b>8</b>+</div><div class="stat-l">Networks</div></div>
+    <div class="stat"><div class="stat-n"><b>5</b>TB</div><div class="stat-l">Max Plan</div></div>
+    <div class="stat"><div class="stat-n">₦<b>100</b></div><div class="stat-l">Starts From</div></div>
+    <div class="stat"><div class="stat-n"><b>24</b>/7</div><div class="stat-l">Support</div></div>
+  </div>
+  <div class="scroll-hint"><div class="sarr">↓</div>Scroll to networks</div>
 </section>
 
-<section class="images-wrap" aria-label="Gallery">
-  <div class="images">
-    <img src="image.jpg" alt="Image 1">
-    <img src="image1.jpg" alt="Image 2">
-    <img src="image2.jpg" alt="Image 3">
+<div class="ads-wrap">
+  <div class="ads-label">Advertisement</div>
+  <div class="ads-frame">
+    <img src="ads.gif" alt="Advertisement" onerror="this.style.display='none';document.getElementById('ads-ph').style.display='flex';"/>
+    <div class="ads-ph" id="ads-ph" style="display:none;">
+      <div class="ads-ph-l"><div class="ads-ph-title">🚀 Advertise Here</div><div class="ads-ph-sub">Reach thousands of Nigerian internet users daily · 728×90</div></div>
+      <button class="ads-ph-btn" onclick="openM('m-contact')">Get Ad Spot</button>
+    </div>
+    <div class="ads-tag">AD</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section class="sec nets-sec" id="nets-sec">
+  <div class="sec-lbl">Choose Your Network</div>
+  <h2 class="sec-h2">All Networks, One Platform</h2>
+  <p class="sec-sub">Select your provider to see all available data plans instantly.</p>
+  <div class="nets-grid" id="nets-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="sec">
+  <div class="sec-lbl">Why UnlimData</div>
+  <h2 class="sec-h2">Everything You Need to Stay Connected</h2>
+  <div class="feats">
+    <div class="feat"><div class="feat-ic">⚡</div><div class="feat-h">Instant Activation</div><div class="feat-p">Data reflects in your account under 60 seconds after payment. No delays, no waiting calls.</div></div>
+    <div class="feat"><div class="feat-ic">🔐</div><div class="feat-h">Secure Payments</div><div class="feat-p">Powered by Paystack — Nigeria's most trusted payment gateway. Every transaction is encrypted end-to-end.</div></div>
+    <div class="feat"><div class="feat-ic">📡</div><div class="feat-h">All Major Networks</div><div class="feat-p">MTN, Glo, Airtel, 9Mobile, Smile, T-Mobile, Vodafone, ntel — all in one place.</div></div>
+    <div class="feat"><div class="feat-ic">💸</div><div class="feat-h">Unbeatable Prices</div><div class="feat-p">₦100 for 10GB. Our rates beat any reseller in the market, guaranteed.</div></div>
+    <div class="feat"><div class="feat-ic">🎁</div><div class="feat-h">Refer &amp; Earn Free Data</div><div class="feat-p">Invite friends and earn 1GB per referral. Redeem once you hit 50GB in your bonus box.</div></div>
+    <div class="feat"><div class="feat-ic">🛠</div><div class="feat-h">Free Browsing Tools</div><div class="feat-p">VPN guides, speed tests, bypass tools, data usage calculators — all free.</div></div>
   </div>
 </section>
 
-<!-- Invite progress UI -->
-<div id="inviteProgressWrap" aria-hidden="true">
-  <div class="title">Invite Progress</div>
-  <div class="track">
-    <div id="inviteProgressBar"></div>
+<div class="divider"></div>
+
+<section class="sec invite-sec">
+  <div class="invite-inner">
+    <div class="invite-em">🎁</div>
+    <div class="invite-body">
+      <div class="invite-h">Invite Friends, Earn Free Data</div>
+      <div class="invite-p">Every friend you bring earns you <strong>1GB free</strong>. Accumulate in your bonus box — redeem at 50GB.</div>
+      <div class="invite-note">* Referral GB redeemable when total in bonus box reaches 50GB.</div>
+    </div>
+    <button class="btn-p" onclick="openInvite()">🔗 Get My Invite Link</button>
   </div>
-  <div id="inviteProgressText">0 / 20 invites</div>
-</div>
+</section>
 
-<!-- Claim area (appears when progress complete) -->
-<div id="inviteClaimWrap" aria-hidden="true">
-  <button id="claimBtn" class="claim-btn">Claim 30GB</button>
-</div>
+<div class="divider"></div>
 
-<!-- modal container -->
-<div id="modal" class="modal-bg" aria-hidden="true"></div>
+<section class="sec" style="padding-top:44px;padding-bottom:44px;">
+  <a class="tstrip" href="unlimited.html" target="_blank">
+    <div class="ts-ic">🛠</div>
+    <div class="ts-body"><div class="ts-title">Unlimited Data Tools — Always Free</div><div class="ts-sub">Stack VPN · Psiphon · Orbot/Tor · Speedify · Windscribe · Speed tests · DNS leak tests · URL block checker and more</div></div>
+    <div class="ts-arr">↗</div>
+  </a>
+</section>
 
-<!-- loader -->
-<div id="loader" class="loader" aria-hidden="true" style="display:none;align-items:center;justify-content:center;">
-  Processing...
-</div>
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand"><div class="ft-logo">Unlim<b>Data</b></div><div class="ft-tag">Unlimited internet subscription for all Nigerian and global networks. Browse anything, anywhere, anytime.</div></div>
+    <div><div class="ft-col-h">Services</div><span class="ft-lnk" onclick="scrollToNets()">Buy Data</span><a class="ft-lnk" href="unlimited.html" target="_blank">Data Tools</a><span class="ft-lnk" onclick="openInvite()">Referral Program</span></div>
+    <div><div class="ft-col-h">Account</div><span class="ft-lnk" onclick="openM('m-signup')">Create Account</span><span class="ft-lnk" onclick="openM('m-login')">Sign In</span><span class="ft-lnk" onclick="openM('m-forgot')">Forgot Password</span></div>
+    <div><div class="ft-col-h">Company</div><span class="ft-lnk" onclick="openM('m-about')">About Us</span><span class="ft-lnk" onclick="openM('m-contact')">Contact Us</span><span class="ft-lnk" onclick="openM('m-privacy')">Privacy Policy</span><span class="ft-lnk" onclick="openM('m-terms')">Terms of Service</span></div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© Unlimited Data 2026. All rights reserved.</div>
+    <div class="ft-row"><a onclick="openM('m-about')">About</a><a onclick="openM('m-contact')">Contact</a><a onclick="openM('m-privacy')">Privacy</a><a onclick="openM('m-terms')">Terms</a></div>
+  </div>
+</footer>
+
+<!-- NETWORK PLANS MODAL -->
+<div class="mw" id="m-net"><div class="mb" style="max-width:500px;">
+  <button class="mx" onclick="closeM('m-net')">✕</button>
+  <div class="nm-head"><div class="nm-logo" id="nm-logo"></div><div><div class="nm-name" id="nm-name"></div><div class="nm-sub" id="nm-sub"></div></div></div>
+  <div style="font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:11px;">Select a Plan</div>
+  <div class="plans-grid" id="nm-plans"></div>
+</div></div>
+
+<!-- BUY MODAL -->
+<div class="mw" id="m-buy"><div class="mb">
+  <button class="mx" onclick="closeM('m-buy')">✕</button>
+  <div class="mt">Confirm Purchase</div><div class="ms" id="buy-sub"></div>
+  <div class="buy-pill"><div><div style="font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;">Selected Plan</div><div class="bp-data" id="buy-data"></div></div><div class="bp-price" id="buy-price"></div></div>
+  <div class="party-row"><div class="pty on" onclick="setParty('self',this)">My Number</div><div class="pty" onclick="setParty('third',this)">3rd Party</div></div>
+  <div class="fg"><label class="fl" id="buy-ph-lbl">Phone Number</label><input class="fi" type="tel" id="buy-ph" placeholder="080XXXXXXXX" maxlength="11"/><div class="ferr" id="buy-ph-err">Enter a valid 11-digit Nigerian number.</div><div style="font-size:.73rem;color:var(--muted);margin-top:4px;" id="buy-hint">Number that will receive the data.</div></div>
+  <button class="fbtn" onclick="processBuy()">💳 Pay with Paystack</button>
+</div></div>
+
+<!-- SIGN UP -->
+<div class="mw" id="m-signup"><div class="mb">
+  <button class="mx" onclick="closeM('m-signup')">✕</button>
+  <div class="mt">Create Account</div><div class="ms">Join UnlimData — takes under 30 seconds.</div>
+  <div class="fg"><label class="fl">Phone Number</label><input class="fi" type="tel" id="su-ph" placeholder="080XXXXXXXX" maxlength="11"/><div class="ferr" id="su-ph-err">Enter a valid 11-digit number.</div></div>
+  <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="su-pw" placeholder="Create a password (min 6 chars)"/><div class="ferr" id="su-pw-err">Password must be at least 6 characters.</div></div>
+  <button class="fbtn" onclick="doSignup()">Create Account — It's Free</button>
+  <span class="flink" onclick="switchM('m-signup','m-login')">Already have an account? Sign In →</span>
+</div></div>
+
+<!-- LOGIN -->
+<div class="mw" id="m-login"><div class="mb">
+  <button class="mx" onclick="closeM('m-login')">✕</button>
+  <div class="mt">Welcome Back</div><div class="ms">Sign in to your UnlimData account.</div>
+  <div class="fg"><label class="fl">Phone Number</label><input class="fi" type="tel" id="li-ph" placeholder="080XXXXXXXX" maxlength="11"/></div>
+  <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="li-pw" placeholder="Your password"/><div class="ferr" id="li-err">Incorrect phone number or password.</div></div>
+  <button class="fbtn" onclick="doLogin()">Sign In</button>
+  <span class="flink" onclick="switchM('m-login','m-forgot')">Forgot your password?</span>
+  <div class="fdiv">or</div>
+  <span class="flink" onclick="switchM('m-login','m-signup')">Create a new account →</span>
+</div></div>
+
+<!-- FORGOT PASSWORD -->
+<div class="mw" id="m-forgot"><div class="mb">
+  <button class="mx" onclick="closeM('m-forgot')">✕</button>
+  <div class="mt" id="fp-title">Reset Password</div><div class="ms" id="fp-sub">Enter your registered phone number to continue.</div>
+  <div id="fp-s1">
+    <div class="fg"><label class="fl">Phone Number</label><input class="fi" type="tel" id="fp-ph" placeholder="080XXXXXXXX" maxlength="11"/><div class="ferr" id="fp-ph-err">Phone number not found in our system.</div></div>
+    <button class="fbtn" onclick="fpStep1()">Continue</button>
+    <span class="flink" onclick="switchM('m-forgot','m-login')">← Back to Sign In</span>
+  </div>
+  <div id="fp-s2" style="display:none;">
+    <div class="fg"><label class="fl">New Password</label><input class="fi" type="password" id="fp-npw" placeholder="Enter new password (min 6 chars)"/><div class="ferr" id="fp-pw-err">Password must be at least 6 characters.</div></div>
+    <button class="fbtn" onclick="fpStep2()">Change Password</button>
+    <button class="fbtn red" onclick="closeM('m-forgot')" style="margin-top:8px;">Cancel</button>
+  </div>
+</div></div>
+
+<!-- CONTACT -->
+<div class="mw" id="m-contact"><div class="mb">
+  <button class="mx" onclick="closeM('m-contact')">✕</button>
+  <div class="mt">Contact Us 💬</div><div class="ms">Have a question? We respond via WhatsApp — usually within minutes.</div>
+  <div class="fg"><label class="fl">Your Phone Number</label><input class="fi" type="tel" id="ct-ph" placeholder="080XXXXXXXX" maxlength="11"/><div class="ferr" id="ct-ph-err">Enter a valid phone number.</div></div>
+  <div class="fg"><label class="fl">Your Question or Issue</label><textarea class="fi" id="ct-msg" placeholder="Type your question here…"></textarea><div class="ferr" id="ct-msg-err">Please type your question.</div></div>
+  <button class="fbtn" onclick="doContact()">💬 Send via WhatsApp</button>
+  <div style="margin-top:14px;text-align:center;font-size:.76rem;color:var(--muted2);">📞 WhatsApp: +1 (740) 406-1406 · Response time: under 30 minutes</div>
+</div></div>
+
+<!-- ABOUT -->
+<div class="mw" id="m-about"><div class="mb" style="max-width:500px;">
+  <button class="mx" onclick="closeM('m-about')">✕</button>
+  <div class="mt">About UnlimData 🌐</div>
+  <div class="policy-body">
+    <p><strong style="color:var(--dark);">UnlimData</strong> is Nigeria's go-to platform for affordable, instant internet data subscriptions across all major networks — MTN, Glo, Airtel, 9Mobile, Smile, T-Mobile, Vodafone, ntel, and more.</p>
+    <h3>Our Mission</h3>
+    <p>We believe internet access should be fast, easy, and affordable for everyone. Our platform lets you buy data for yourself or any number in seconds, with payments secured by Paystack.</p>
+    <h3>What We Offer</h3>
+    <ul>
+      <li>Data plans from ₦100 (10GB) to ₦50,000 (5TB)</li>
+      <li>Instant activation across 8+ networks</li>
+      <li>3rd party gifting — send data to any number</li>
+      <li>Free data tools: VPN guides, speed tests, bypass tools</li>
+      <li>Referral program — earn 1GB per friend invited</li>
+    </ul>
+    <h3>Why Trust Us</h3>
+    <p>Thousands of users across Nigeria trust UnlimData to keep them connected. Every transaction is processed securely through Paystack and every plan is activated instantly.</p>
+    <p><em>"Browse anything, anywhere, anytime — that is the UnlimData promise."</em></p>
+    <div class="policy-footer">Version 2.0 · © Unlimited Data 2026 · All rights reserved</div>
+  </div>
+</div></div>
+
+<!-- PRIVACY -->
+<div class="mw" id="m-privacy"><div class="mb" style="max-width:520px;">
+  <button class="mx" onclick="closeM('m-privacy')">✕</button>
+  <div class="mt">Privacy Policy 🔒</div><div class="ms">Last updated: January 2026</div>
+  <div class="policy-body">
+    <h3>1. Information We Collect</h3>
+    <ul><li><strong>Phone number</strong> — used as your account identifier and for data delivery</li><li><strong>Password</strong> — stored securely and never shared</li><li><strong>Transaction data</strong> — processed securely by Paystack (we do not store card details)</li><li><strong>Usage data</strong> — anonymous analytics to improve our platform</li></ul>
+    <h3>2. How We Use Your Information</h3>
+    <ul><li>To create and manage your UnlimData account</li><li>To process data plan purchases and activate subscriptions</li><li>To send transaction confirmations</li><li>To respond to your support inquiries</li><li>To improve our services and user experience</li></ul>
+    <h3>3. Data Sharing</h3>
+    <p>We do <strong>not</strong> sell, trade, or rent your personal information. We share data only with Paystack (payment processing) and network providers (phone number only, to deliver your data plan).</p>
+    <h3>4. Data Security</h3>
+    <p>All data is stored securely. Passwords are never stored in plain text. Payment information is handled entirely by Paystack and never touches our servers.</p>
+    <h3>5. Cookies</h3>
+    <p>We use minimal browser storage (localStorage) to keep you signed in and remember preferences. No third-party tracking cookies are used.</p>
+    <h3>6. Your Rights</h3>
+    <ul><li>Right to access your personal data</li><li>Right to delete your account and data</li><li>Right to opt out of communications</li></ul>
+    <p>To exercise these rights, contact us via WhatsApp at +1 (740) 406-1406.</p>
+    <h3>7. Changes to This Policy</h3>
+    <p>We may update this policy occasionally. Continued use of UnlimData after changes means you accept the updated policy.</p>
+    <div class="policy-footer">© Unlimited Data 2026 · Contact: WhatsApp +1 (740) 406-1406</div>
+  </div>
+</div></div>
+
+<!-- TERMS -->
+<div class="mw" id="m-terms"><div class="mb" style="max-width:520px;">
+  <button class="mx" onclick="closeM('m-terms')">✕</button>
+  <div class="mt">Terms of Service 📄</div><div class="ms">Last updated: January 2026 — Please read carefully before using UnlimData.</div>
+  <div class="policy-body">
+    <h3>1. Acceptance of Terms</h3>
+    <p>By using UnlimData, you agree to these Terms of Service. If you do not agree, please do not use our platform.</p>
+    <h3>2. Service Description</h3>
+    <p>UnlimData provides a digital platform for purchasing mobile data subscriptions. We act as a reseller and are not affiliated with any network operator.</p>
+    <h3>3. Account Responsibility</h3>
+    <ul><li>You are responsible for the security of your account password</li><li>You must provide a valid, active Nigerian phone number</li><li>You may not share your credentials with others</li><li>You are responsible for all purchases made through your account</li></ul>
+    <h3>4. Payments and Refunds</h3>
+    <ul><li>All payments are processed securely by Paystack</li><li>Prices are displayed in Nigerian Naira (₦) and are final</li><li>Data plans are activated automatically after payment confirmation</li><li>Refunds are processed within 24–48 hours for failed activations only</li></ul>
+    <h3>5. Prohibited Uses</h3>
+    <ul><li>Purchasing data for fraudulent or illegal activities</li><li>Attempting to hack or reverse-engineer our platform</li><li>Creating multiple accounts to abuse referral programs</li><li>Reselling data plans without authorization</li></ul>
+    <h3>6. Referral Program</h3>
+    <ul><li>1GB is credited per genuine referral (friend must complete a purchase)</li><li>Referral GB is redeemable when your bonus box reaches 50GB</li><li>Fraudulent referrals will result in account termination</li></ul>
+    <h3>7. Limitation of Liability</h3>
+    <p>UnlimData is not liable for service interruptions caused by network providers. Our maximum liability is limited to the value of the transaction in dispute.</p>
+    <h3>8. Contact</h3>
+    <p>For any disputes, contact us via WhatsApp at +1 (740) 406-1406.</p>
+    <div class="policy-footer">© Unlimited Data 2026 · These terms are governed by Nigerian law.</div>
+  </div>
+</div></div>
+
+<!-- INVITE -->
+<div class="mw" id="m-invite"><div class="mb">
+  <button class="mx" onclick="closeM('m-invite')">✕</button>
+  <div class="mt">🎁 Invite and Earn Data</div><div class="ms">Each friend that subscribes earns you 1GB free. Redeem at 50GB total.</div>
+  <div id="inv-prompt" style="text-align:center;padding:20px 0;">
+    <div style="font-size:2.5rem;margin-bottom:11px;">🔐</div>
+    <div style="font-size:.86rem;color:var(--muted);margin-bottom:16px;">Sign in to get your personal invite link and track your earned GBs.</div>
+    <button class="fbtn" style="max-width:190px;margin:0 auto;" onclick="switchM('m-invite','m-login')">Sign In First</button>
+  </div>
+  <div id="inv-content" style="display:none;">
+    <div class="fg"><label class="fl">Your Invite Link</label><div style="display:flex;gap:8px;"><input class="fi" type="text" id="inv-link" readonly style="flex:1;"/><button class="fbtn" style="width:auto;padding:0 15px;margin-top:0;" onclick="copyInvLink()">Copy</button></div></div>
+    <div class="inv-box">
+      <div class="inv-bh">🎁 Your Bonus Box</div>
+      <div class="inv-row"><span>Friends Invited</span><span class="inv-val" id="inv-cnt">0</span></div>
+      <div class="inv-row"><span>GB Earned</span><span class="inv-val" id="inv-gb">0 GB</span></div>
+      <div class="inv-row"><span>Needed to Redeem</span><span class="inv-val">50 GB</span></div>
+      <div class="inv-bar-w"><div class="inv-bar" id="inv-bar" style="width:0%"></div></div>
+      <button class="inv-claim" id="inv-claim" disabled onclick="claimGB()">Claim Free Data (Need 50GB)</button>
+    </div>
+  </div>
+</div></div>
 
 <script>
-(function () {
-  // --- Core form & apply logic (keeps previous behavior) ---
-  let submittedData = null;
-  const modalBg = document.getElementById('modal');
-  const loader = document.getElementById('loader');
-  const applyNowBtn = document.getElementById('applyNowBtn');
-
-  applyNowBtn.style.pointerEvents = 'auto';
-  applyNowBtn.addEventListener('click', openApplyForm);
-  applyNowBtn.onclick = openApplyForm;
-
-  function openApplyForm() {
-    modalBg.innerHTML = `
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
-        <h3 id="formTitle">Ultimate Subscription Registration</h3>
-
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text" placeholder="Full name" autocomplete="name" />
-
-        <label for="phone">Phone Number</label>
-        <input id="phone" name="phone" type="tel" placeholder="+2348012345678" autocomplete="tel" />
-
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" />
-
-        <label for="network">Network</label>
-        <select id="network" name="network">
-          <option value="">Select</option>
-          <option value="MTN">MTN</option>
-          <option value="Airtel">Airtel</option>
-          <option value="Glo">Glo</option>
-          <option value="9mobile">9mobile</option>
-        </select>
-
-        <div class="actions">
-          <button id="applyBtn" class="primary" disabled>Apply</button>
-          <button id="cancelBtn" class="secondary">Cancel</button>
-        </div>
-
-        <hr style="margin:14px 0;border:none;border-top:1px solid #eee" />
-
-        <p style="margin:8px 0"><strong>One Time Registration: ₦500</strong></p>
-        <p style="margin:0;color:#333">Account Number: <strong>2040541530</strong><br>
-        Account Name: <strong>Igwekalu</strong><br>
-        Bank: <strong>Kuda</strong></p>
-      </div>
-    `;
-
-    modalBg.style.display = 'flex';
-    modalBg.style.alignItems = 'center';
-    modalBg.style.justifyContent = 'center';
-    modalBg.setAttribute('aria-hidden', 'false');
-
-    const nameEl = document.getElementById('name');
-    const phoneEl = document.getElementById('phone');
-    const emailEl = document.getElementById('email');
-    const networkEl = document.getElementById('network');
-    const applyBtn = document.getElementById('applyBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-
-    function validate() {
-      const name = nameEl.value.trim();
-      const phone = phoneEl.value.trim();
-      const email = emailEl.value.trim();
-      const network = networkEl.value.trim();
-      const emailOk = email.length > 3 && email.includes('@');
-      const phoneOk = phone.length >= 7;
-      const ok = name && phoneOk && emailOk && network;
-      applyBtn.disabled = !ok;
-    }
-
-    [nameEl, phoneEl, emailEl, networkEl].forEach(el => el.addEventListener('input', validate));
-    cancelBtn.addEventListener('click', closeModal);
-
-    applyBtn.addEventListener('click', function () {
-      if (applyBtn.disabled) return;
-      submittedData = {
-        name: nameEl.value.trim(),
-        phone: phoneEl.value.trim(),
-        email: emailEl.value.trim(),
-        network: networkEl.value.trim()
-      };
-      closeModal();
-      showLoaderThenSuccess();
-    });
-
-    modalBg.addEventListener('keydown', function onKey(e) {
-      if (e.key === 'Enter') {
-        if (!applyBtn.disabled) applyBtn.click();
-      }
-    }, { once: true });
-  }
-
-  function closeModal() {
-    modalBg.style.display = 'none';
-    modalBg.innerHTML = '';
-    modalBg.setAttribute('aria-hidden', 'true');
-  }
-
-  function showLoaderThenSuccess() {
-    loader.style.display = 'flex';
-    loader.style.alignItems = 'center';
-    loader.style.justifyContent = 'center';
-    setTimeout(() => {
-      loader.style.display = 'none';
-      showSuccessDialog();
-    }, 2000);
-  }
-
-  function showSuccessDialog() {
-    if (!submittedData) return;
-    modalBg.innerHTML = `
-      <div class="modal" role="dialog" aria-modal="true">
-        <h3>Application Successful</h3>
-        <p style="margin:10px 0 14px">Please confirm your payment proof to complete registration.</p>
-
-        <div style="text-align:left;color:#333;margin-bottom:12px">
-          <strong>Applicant</strong><br>
-          Name: ${escapeHtml(submittedData.name)}<br>
-          Phone: ${escapeHtml(submittedData.phone)}<br>
-          Email: ${escapeHtml(submittedData.email)}<br>
-          Network: ${escapeHtml(submittedData.network)}
-        </div>
-
-        <div class="actions">
-          <button id="confirmBtn" class="primary">Confirm</button>
-          <button id="closeBtn" class="secondary">Close</button>
-        </div>
-      </div>
-    `;
-    modalBg.style.display = 'flex';
-    modalBg.style.alignItems = 'center';
-    modalBg.style.justifyContent = 'center';
-    modalBg.setAttribute('aria-hidden', 'false');
-
-    document.getElementById('closeBtn').addEventListener('click', closeModal);
-    document.getElementById('confirmBtn').addEventListener('click', function () {
-      loader.style.display = 'flex';
-      loader.style.alignItems = 'center';
-      loader.style.justifyContent = 'center';
-      const waMsg = `Ultimate Subscription Registration: Name: ${submittedData.name}; Phone: ${submittedData.phone}; Email: ${submittedData.email}; Network: ${submittedData.network}; Payment: ₦500. I confirm payment proof.`;
-      const waUrl = 'https://wa.me/2347031935351?text=' + encodeURIComponent(waMsg);
-      setTimeout(() => { window.location.href = waUrl; }, 1500);
-    });
-  }
-
-  // close modal when clicking outside content
-  modalBg.addEventListener('click', function (e) {
-    if (e.target === modalBg) closeModal();
+const PK='pk_live_4ff37d15381d1d12c78fd66f7bc86beb64c59415';
+const NETS=[
+  {id:'mtn',name:'MTN',img:'mtn.png',color:'#f5a623',bg:'#fff8e1',sub:'MTN Nigeria — 4G/5G Ready'},
+  {id:'glo',name:'Glo',img:'glo.png',color:'#00a550',bg:'#e8f5e9',sub:'Glo Mobile — Broadband Speed'},
+  {id:'airtel',name:'Airtel',img:'airtel.png',color:'#e51937',bg:'#fce4e7',sub:'Airtel Nigeria — 4G LTE'},
+  {id:'9mobile',name:'9Mobile',img:'9mobile.png',color:'#00934f',bg:'#e8f5ee',sub:'9Mobile — Smart Data Plans'},
+  {id:'tmobile',name:'T-Mobile',img:'T-Mobile.png',color:'#e20074',bg:'#fce4f1',sub:'T-Mobile — Nationwide 5G'},
+  {id:'vodafone',name:'Vodafone',img:'vodafone.png',color:'#e60000',bg:'#fde8e8',sub:'Vodafone — Stay Connected'},
+  {id:'smile',name:'Smile',img:'smile.png',color:'#ff7a00',bg:'#fff3e0',sub:'Smile — 4G LTE Broadband'},
+  {id:'ntel',name:'ntel',img:'ntel.png',color:'#00aeef',bg:'#e3f6fd',sub:'ntel — Fiber-Speed LTE'},
+];
+const PLANS=[
+  {data:'10GB',price:100,label:'₦100',val:'30 days'},
+  {data:'30GB',price:300,label:'₦300',val:'30 days'},
+  {data:'50GB',price:500,label:'₦500',val:'30 days'},
+  {data:'100GB',price:1000,label:'₦1,000',val:'30 days',pop:true},
+  {data:'500GB',price:5000,label:'₦5,000',val:'60 days'},
+  {data:'1TB',price:10000,label:'₦10,000',val:'90 days'},
+  {data:'2TB',price:20000,label:'₦20,000',val:'180 days'},
+  {data:'5TB',price:50000,label:'₦50,000',val:'365 days'},
+];
+let user=null,currentBuy={},buyParty='self',fpPhone='';
+try{user=JSON.parse(localStorage.getItem('ud_u')||'null');}catch(e){}
+if(user)refreshUI();
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>10));
+const ng=document.getElementById('nets-grid');
+NETS.forEach(n=>{
+  const el=document.createElement('div');el.className='nc';
+  el.innerHTML=`<div class="nc-img"><img src="${n.img}" alt="${n.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="nc-fall" style="display:none;background:${n.bg};color:${n.color}">${n.name[0]}</div></div><div class="nc-name">${n.name}</div><div class="nc-tag">Active</div>`;
+  el.addEventListener('mouseenter',()=>{el.style.boxShadow=`0 6px 26px ${n.color}28`;});
+  el.addEventListener('mouseleave',()=>{el.style.boxShadow='';});
+  el.onclick=()=>openNetModal(n);ng.appendChild(el);
+});
+function openNetModal(net){
+  document.getElementById('nm-logo').innerHTML=`<img src="${net.img}" alt="${net.name}" style="width:100%;height:100%;object-fit:contain;padding:5px;" onerror="this.style.display='none'"/>`;
+  document.getElementById('nm-name').textContent=net.name;
+  document.getElementById('nm-sub').textContent=net.sub;
+  const pg=document.getElementById('nm-plans');pg.innerHTML='';
+  PLANS.forEach(p=>{
+    const el=document.createElement('div');el.className='plan';
+    el.innerHTML=`${p.pop?'<div class="pop-badge">Best Value</div>':''}<div class="plan-data">${p.data}</div><div class="plan-price">${p.label}</div><div class="plan-val">${p.val}</div>`;
+    el.onclick=()=>{closeM('m-net');openBuyModal(net,p);};pg.appendChild(el);
   });
-
-  // Esc closes modal
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modalBg.style.display === 'flex') closeModal();
-  });
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; });
-  }
-
-  // --- Invite + Progress + Claim logic ---
-  const INVITES_REQUIRED = 20;
-  const SHARE_LINK = 'https://webryft.github.io/Unlimited-data/';
-  const SHARE_TEXT = "Hi friend — I just received my Unlimited Subscription and got 30GB of fast, unlimited browsing across all networks. It's simple, affordable and works everywhere. Grab yours now:";
-  const STORAGE_KEY = 'ultimate_invite_count';
-
-  const inviteHeader = document.getElementById('inviteHeader');
-  const inviteHeroBtn = document.getElementById('inviteHeroBtn');
-  const progressWrap = document.getElementById('inviteProgressWrap');
-  const progressBar = document.getElementById('inviteProgressBar');
-  const progressText = document.getElementById('inviteProgressText');
-  const claimWrap = document.getElementById('inviteClaimWrap');
-  const claimBtn = document.getElementById('claimBtn');
-
-  let inviteCount = parseInt(sessionStorage.getItem(STORAGE_KEY) || '0', 10);
-
-  function updateInviteUI(){
-    const pct = Math.min(100, Math.round((inviteCount / INVITES_REQUIRED) * 100));
-    progressBar.style.width = pct + '%';
-    progressText.textContent = inviteCount >= INVITES_REQUIRED ? `Goal reached — ${INVITES_REQUIRED} invites!` : `${inviteCount} / ${INVITES_REQUIRED} invites`;
-    progressWrap.style.display = inviteCount > 0 ? 'block' : 'none';
-    if(inviteCount >= INVITES_REQUIRED){
-      claimWrap.style.display = 'block';
-      claimWrap.setAttribute('aria-hidden','false');
-      progressBar.style.width = '100%';
-    } else {
-      claimWrap.style.display = 'none';
-      claimWrap.setAttribute('aria-hidden','true');
-    }
-  }
-  updateInviteUI();
-
-  function doInvite(){
-    // Build message and open WhatsApp share
-    const message = `${SHARE_TEXT} ${SHARE_LINK}`;
-    const waUrl = 'https://wa.me/?text=' + encodeURIComponent(message);
-    window.open(waUrl, '_blank');
-
-    // increment progress
-    inviteCount = Math.min(INVITES_REQUIRED, inviteCount + 1);
-    sessionStorage.setItem(STORAGE_KEY, String(inviteCount));
-    updateInviteUI();
-  }
-
-  if(inviteHeader) inviteHeader.addEventListener('click', doInvite);
-  if(inviteHeroBtn) inviteHeroBtn.addEventListener('click', doInvite);
-
-  // Claim flow
-  if(claimBtn){
-    claimBtn.addEventListener('click', function(){
-      modalBg.innerHTML = `
-        <div class="modal" role="dialog" aria-modal="true">
-          <h3>Claim Your 30GB Reward</h3>
-          <p style="margin:10px 0 12px;color:#333">
-            Amazing — you've completed the invite goal. To claim your <strong>30GB</strong>, please take a screenshot of the filled invite bar as proof, then click <strong>Apply</strong>. Our verification team will confirm and send your reward.
-          </p>
-          <ul style="text-align:left;color:#333;margin:8px 0 12px;padding-left:18px">
-            <li>Step 1: Screenshot the filled invite progress bar.</li>
-            <li>Step 2: Click Apply and then Confirm to open WhatsApp and attach your screenshot.</li>
-            <li>Step 3: Wait for verification — your 30GB will be delivered after confirmation.</li>
-          </ul>
-          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
-            <button id="applyClaimBtn" class="primary">Apply</button>
-            <button id="cancelClaimBtn" class="secondary">Cancel</button>
-          </div>
-        </div>
-      `;
-      modalBg.style.display = 'flex';
-      modalBg.style.alignItems = 'center';
-      modalBg.style.justifyContent = 'center';
-      modalBg.setAttribute('aria-hidden','false');
-
-      document.getElementById('cancelClaimBtn').addEventListener('click', closeModal);
-      document.getElementById('applyClaimBtn').addEventListener('click', function(){
-        closeModal();
-        loader.style.display = 'flex';
-        loader.style.alignItems = 'center';
-        loader.style.justifyContent = 'center';
-        setTimeout(() => {
-          loader.style.display = 'none';
-          modalBg.innerHTML = `
-            <div class="modal" role="dialog" aria-modal="true">
-              <h3>Claim Submitted</h3>
-              <p style="margin:10px 0 12px;color:#333">
-                Your claim request has been prepared. Click <strong>Confirm</strong> to open WhatsApp and send your screenshot and details to our verification team. Be sure to attach the screenshot of the filled bar.
-              </p>
-              <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
-                <button id="confirmClaimBtn" class="primary">Confirm</button>
-                <button id="closeClaimBtn" class="secondary">Close</button>
-              </div>
-            </div>
-          `;
-          modalBg.style.display = 'flex';
-          modalBg.style.alignItems = 'center';
-          modalBg.style.justifyContent = 'center';
-          modalBg.setAttribute('aria-hidden','false');
-
-          document.getElementById('closeClaimBtn').addEventListener('click', closeModal);
-          document.getElementById('confirmClaimBtn').addEventListener('click', function(){
-            const waMsg = `Hello, I am claiming my 30GB reward. My invite progress is complete. Please find my screenshot attached. Thank you.`;
-            const waUrl = 'https://wa.me/2349168660191?text=' + encodeURIComponent(waMsg);
-            window.open(waUrl, '_blank');
-            // Optionally reset progress after claim:
-            // sessionStorage.removeItem(STORAGE_KEY); inviteCount = 0; updateInviteUI();
-          });
-        }, 2000);
-      });
+  openM('m-net');
+}
+function openBuyModal(net,plan){
+  currentBuy={net,plan};buyParty='self';
+  document.getElementById('buy-sub').textContent=`${net.name} · ${plan.data} data plan`;
+  document.getElementById('buy-data').textContent=plan.data;
+  document.getElementById('buy-price').textContent=plan.label;
+  document.getElementById('buy-ph').value=user?user.phone:'';
+  document.getElementById('buy-ph-err').classList.remove('on');
+  document.getElementById('buy-ph-lbl').textContent='My Number';
+  document.getElementById('buy-hint').textContent='Number that will receive the data.';
+  document.querySelectorAll('.pty').forEach((e,i)=>e.classList.toggle('on',i===0));
+  openM('m-buy');
+}
+function setParty(type,el){
+  buyParty=type;document.querySelectorAll('.pty').forEach(e=>e.classList.remove('on'));el.classList.add('on');
+  document.getElementById('buy-ph-lbl').textContent=type==='self'?'My Number':"Friend's Number";
+  document.getElementById('buy-hint').textContent=type==='self'?'Number that will receive the data.':"Enter the number you are gifting data to.";
+  if(type==='self'&&user)document.getElementById('buy-ph').value=user.phone;
+  else if(type==='third')document.getElementById('buy-ph').value='';
+}
+function processBuy(){
+  const ph=document.getElementById('buy-ph').value.trim();
+  if(!/^0\d{10}$/.test(ph)){document.getElementById('buy-ph-err').classList.add('on');return;}
+  document.getElementById('buy-ph-err').classList.remove('on');
+  closeM('m-buy');showLoader('Connecting to Paystack…','Securing your payment…');
+  setTimeout(()=>{
+    hideLoader();
+    const handler=PaystackPop.setup({
+      key:PK,email:user?`${user.phone}@unlimdata.ng`:`${document.getElementById('buy-ph').value.trim()}@unlimdata.ng`,
+      amount:currentBuy.plan.price*100,currency:'NGN',ref:'UD'+Date.now(),
+      metadata:{network:currentBuy.net.name,data_plan:currentBuy.plan.data,phone:ph,party:buyParty},
+      label:`UnlimData — ${currentBuy.plan.data} on ${currentBuy.net.name}`,
+      onClose(){showToast('Payment window closed. You can try again anytime.');},
+      callback(resp){onPaySuccess(resp,ph);}
     });
+    handler.openIframe();
+  },800);
+}
+function onPaySuccess(resp,ph){
+  showLoader('Activating your data…','Almost done — takes about 10 seconds…');
+  setTimeout(()=>{hideLoader();showBanner(`Your ${currentBuy.plan.data} ${currentBuy.net.name} data plan (${currentBuy.plan.label}) has been successfully activated and sent to ${ph}. Enjoy browsing! 🎉`);setTimeout(()=>hideBanner(),12000);},1400);
+}
+function doSignup(){
+  const ph=document.getElementById('su-ph').value.trim();const pw=document.getElementById('su-pw').value;let ok=true;
+  if(!/^0\d{10}$/.test(ph)){document.getElementById('su-ph-err').classList.add('on');ok=false;}else document.getElementById('su-ph-err').classList.remove('on');
+  if(pw.length<6){document.getElementById('su-pw-err').classList.add('on');ok=false;}else document.getElementById('su-pw-err').classList.remove('on');
+  if(!ok)return;const db=getDB();if(db[ph]){showToast('Account exists. Sign in instead.');return;}
+  db[ph]={phone:ph,pw,invGb:0,invites:0};saveDB(db);user=db[ph];localStorage.setItem('ud_u',JSON.stringify(user));
+  refreshUI();closeM('m-signup');showToast('✅ Account created! Welcome to UnlimData.');
+}
+function doLogin(){
+  const ph=document.getElementById('li-ph').value.trim();const pw=document.getElementById('li-pw').value;const db=getDB();
+  if(!db[ph]||db[ph].pw!==pw){document.getElementById('li-err').classList.add('on');return;}
+  document.getElementById('li-err').classList.remove('on');user=db[ph];localStorage.setItem('ud_u',JSON.stringify(user));
+  refreshUI();closeM('m-login');showToast(`✅ Welcome back, ${ph}!`);
+}
+function signOut(){user=null;localStorage.removeItem('ud_u');refreshUI();closeDrawer();showToast('Signed out successfully.');}
+function refreshUI(){
+  const on=!!user;
+  document.getElementById('dr-user').classList.toggle('on',on);
+  document.getElementById('dr-so').classList.toggle('on',on);
+  document.getElementById('dr-li').style.display=on?'none':'flex';
+  document.getElementById('dr-su').style.display=on?'none':'flex';
+  if(on){document.getElementById('dr-uname').textContent=`📱 ${user.phone}`;document.getElementById('dr-ubonus').textContent=`🎁 Bonus: ${user.invGb||0}GB`;}
+  const cta=document.getElementById('nav-cta');const li=document.getElementById('nav-li');
+  if(on){cta.textContent='My Account';cta.onclick=openDrawer;li.style.display='none';}
+  else{cta.textContent='Get Started';cta.onclick=()=>openM('m-signup');li.style.display='';}
+}
+function fpStep1(){
+  const ph=document.getElementById('fp-ph').value.trim();const db=getDB();
+  if(!db[ph]){document.getElementById('fp-ph-err').classList.add('on');return;}
+  document.getElementById('fp-ph-err').classList.remove('on');fpPhone=ph;
+  document.getElementById('fp-s1').style.display='none';document.getElementById('fp-s2').style.display='block';
+  document.getElementById('fp-title').textContent='Change Password';document.getElementById('fp-sub').textContent=`Set a new password for ${ph}.`;
+}
+function fpStep2(){
+  const pw=document.getElementById('fp-npw').value;
+  if(pw.length<6){document.getElementById('fp-pw-err').classList.add('on');return;}
+  document.getElementById('fp-pw-err').classList.remove('on');
+  const db=getDB();db[fpPhone].pw=pw;saveDB(db);
+  if(user&&user.phone===fpPhone){user.pw=pw;localStorage.setItem('ud_u',JSON.stringify(user));}
+  closeM('m-forgot');
+  document.getElementById('fp-s1').style.display='block';document.getElementById('fp-s2').style.display='none';
+  document.getElementById('fp-title').textContent='Reset Password';document.getElementById('fp-sub').textContent='Enter your registered phone number to continue.';
+  document.getElementById('fp-ph').value='';document.getElementById('fp-npw').value='';
+  showToast('✅ Password changed successfully!');
+}
+function doContact(){
+  const ph=document.getElementById('ct-ph').value.trim();const msg=document.getElementById('ct-msg').value.trim();let ok=true;
+  if(!/^0\d{10}$/.test(ph)){document.getElementById('ct-ph-err').classList.add('on');ok=false;}else document.getElementById('ct-ph-err').classList.remove('on');
+  if(!msg){document.getElementById('ct-msg-err').classList.add('on');ok=false;}else document.getElementById('ct-msg-err').classList.remove('on');
+  if(!ok)return;
+  const txt=encodeURIComponent(`Hello! I am contacting you from UnlimData.\n\nMy phone: ${ph}\n\n${msg}`);
+  window.open(`https://wa.me/17404061406?text=${txt}`,'_blank');
+  closeM('m-contact');document.getElementById('ct-ph').value='';document.getElementById('ct-msg').value='';
+  showToast('Opening WhatsApp…');
+}
+function openInvite(){
+  const on=!!user;
+  document.getElementById('inv-prompt').style.display=on?'none':'block';
+  document.getElementById('inv-content').style.display=on?'block':'none';
+  if(on){
+    document.getElementById('inv-link').value=`${location.origin}${location.pathname}?ref=${user.phone}`;
+    const gb=user.invGb||0,cnt=user.invites||0;
+    document.getElementById('inv-cnt').textContent=cnt;document.getElementById('inv-gb').textContent=gb+' GB';
+    document.getElementById('inv-bar').style.width=Math.min(100,gb/50*100)+'%';
+    const btn=document.getElementById('inv-claim');btn.disabled=gb<50;
+    btn.textContent=gb>=50?'🎉 Claim Your 50GB Now!':`Claim Free Data (${50-gb}GB more needed)`;
   }
-
-  // Expose a refresh function if needed
-  window.__ultimateInvite = {
-    doInvite,
-    getCount: () => inviteCount,
-    reset: () => { inviteCount = 0; sessionStorage.removeItem(STORAGE_KEY); updateInviteUI(); }
-  };
-
-})();
+  openM('m-invite');
+}
+function copyInvLink(){
+  const v=document.getElementById('inv-link').value;
+  navigator.clipboard.writeText(v).then(()=>showToast('✅ Invite link copied!')).catch(()=>{try{document.getElementById('inv-link').select();document.execCommand('copy');showToast('✅ Link copied!');}catch(e){showToast('Copy the link manually.');}});
+}
+function claimGB(){
+  if(!user||user.invGb<50)return;user.invGb-=50;
+  const db=getDB();db[user.phone].invGb=user.invGb;saveDB(db);localStorage.setItem('ud_u',JSON.stringify(user));
+  closeM('m-invite');showBanner('🎁 50GB referral bonus activated! Enjoy your free data.');setTimeout(()=>hideBanner(),10000);
+}
+const _ref=new URLSearchParams(location.search).get('ref');
+if(_ref&&user&&user.phone!==_ref){const db=getDB();if(db[_ref]){db[_ref].invGb=(db[_ref].invGb||0)+1;db[_ref].invites=(db[_ref].invites||0)+1;saveDB(db);}}
+function getDB(){try{return JSON.parse(localStorage.getItem('ud_db')||'{}');}catch(e){return{};}}
+function saveDB(d){localStorage.setItem('ud_db',JSON.stringify(d));}
+function openM(id){document.getElementById(id).classList.add('on');document.getElementById('dimmer').classList.add('on');}
+function closeM(id){document.getElementById(id).classList.remove('on');if(!document.querySelectorAll('.mw.on').length)document.getElementById('dimmer').classList.remove('on');}
+function switchM(a,b){closeM(a);setTimeout(()=>openM(b),180);}
+document.querySelectorAll('.mw').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeM(m.id);});});
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('dimmer').classList.add('on');}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');if(!document.querySelectorAll('.mw.on').length)document.getElementById('dimmer').classList.remove('on');}
+function closeDimmer(){closeDrawer();document.querySelectorAll('.mw.on').forEach(m=>closeM(m.id));}
+function scrollToNets(){document.getElementById('nets-sec').scrollIntoView({behavior:'smooth'});}
+function showLoader(t,s){document.getElementById('ld-txt').textContent=t||'PROCESSING';document.getElementById('ld-sub').textContent=s||'Please wait…';document.getElementById('loader').classList.add('on');}
+function hideLoader(){document.getElementById('loader').classList.remove('on');}
+function showBanner(msg){document.getElementById('suc-m').textContent=msg;document.getElementById('success').classList.add('on');}
+function hideBanner(){document.getElementById('success').classList.remove('on');}
+let _tt;
+function showToast(msg,dur=3000){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),dur);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.mw.on').forEach(m=>closeM(m.id));closeDrawer();}});
 </script>
 </body>
 </html>
